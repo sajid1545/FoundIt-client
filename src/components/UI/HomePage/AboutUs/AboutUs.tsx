@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const AboutUs = () => {
 	return (
-		<Container sx={{ my: 5 }} maxWidth="xl">
+		<Container sx={{ my: 10 }} maxWidth="xl">
 			<Typography
 				align="center"
 				variant="h3"

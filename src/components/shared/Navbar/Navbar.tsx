@@ -36,7 +36,7 @@ function NavBar() {
 	return (
 		<Box>
 			<AppBar
-				position="static"
+				position="absolute"
 				sx={{
 					backgroundColor: "transparent",
 					color: "white",
@@ -105,7 +105,7 @@ function NavBar() {
 								aria-controls="menu-appbar"
 								aria-haspopup="true"
 								onClick={handleOpenNavMenu}>
-								<MenuIcon sx={{ color: "black" }} />
+								<MenuIcon sx={{ color: "white" }} />
 							</IconButton>
 							<Menu
 								id="menu-appbar"
