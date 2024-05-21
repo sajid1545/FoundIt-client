@@ -37,7 +37,12 @@ function NavBar() {
 		<Box>
 			<AppBar
 				position="static"
-				sx={{ backgroundColor: "primary.main", color: "secondary.light", boxShadow: "none", p: 1 }}>
+				sx={{
+					backgroundColor: "transparent",
+					color: "white",
+					boxShadow: "none",
+					p: 1,
+				}}>
 				<Box>
 					<Toolbar
 						disableGutters
@@ -49,18 +54,45 @@ function NavBar() {
 
 						<Box sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}>
 							<Link href="/about">
-								<Typography sx={{ color: "secondary.light" }} textAlign="center">
-									About
+								<Typography
+									sx={{
+										color: "secondary.main",
+										fontWeight: "bold",
+										"&:hover": {
+											color: "white",
+											transition: "all 0.5s ease",
+										},
+									}}
+									textAlign="center">
+									Home
 								</Typography>
 							</Link>
 							<Link href="/about">
-								<Typography sx={{ color: "secondary.light" }} textAlign="center">
-									About
+								<Typography
+									sx={{
+										color: "secondary.main",
+										fontWeight: "bold",
+										"&:hover": {
+											color: "white",
+											transition: "all 0.5s ease",
+										},
+									}}
+									textAlign="center">
+									About Us
 								</Typography>
 							</Link>
 							<Link href="/about">
-								<Typography sx={{ color: "secondary.light" }} textAlign="center">
-									About
+								<Typography
+									sx={{
+										color: "secondary.main",
+										fontWeight: "bold",
+										"&:hover": {
+											color: "white",
+											transition: "all 0.5s ease",
+										},
+									}}
+									textAlign="center">
+									My profile
 								</Typography>
 							</Link>
 						</Box>
@@ -72,9 +104,8 @@ function NavBar() {
 								aria-label="account of current user"
 								aria-controls="menu-appbar"
 								aria-haspopup="true"
-								onClick={handleOpenNavMenu}
-								color="inherit">
-								<MenuIcon />
+								onClick={handleOpenNavMenu}>
+								<MenuIcon sx={{ color: "black" }} />
 							</IconButton>
 							<Menu
 								id="menu-appbar"
