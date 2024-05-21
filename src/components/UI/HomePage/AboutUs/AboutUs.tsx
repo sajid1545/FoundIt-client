@@ -1,10 +1,10 @@
 import aboutUsImage from "@/assets/about-us.jpg";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 
 const AboutUs = () => {
 	return (
-		<Box my={5} px={5}>
+		<Container sx={{ my: 5 }} maxWidth="xl">
 			<Typography
 				align="center"
 				variant="h3"
@@ -34,7 +34,7 @@ const AboutUs = () => {
 					<Image src={aboutUsImage} alt="about-us" />
 				</Box>
 			</Stack>
-		</Box>
+		</Container>
 	);
 };
 
