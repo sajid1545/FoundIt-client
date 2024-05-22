@@ -13,6 +13,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldValues } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 import PasswordConfirmationAlert from "../components/PasswordConfirmationAlert/PasswordConfirmationAlert";
 
@@ -50,14 +51,16 @@ const RegisterPage = () => {
 					setToLocalStorage(authKey, res?.data?.token);
 					router.push("/");
 					router.refresh();
+					toast.success("Logged in successfully");
 					setLoading(false);
 				}
 			} catch (error) {
 				console.log(error);
 				setLoading(false);
 			}
+		} else {
+			setLoading(false);
 		}
-		setLoading(false);
 	};
 
 	const handleCancel = () => {

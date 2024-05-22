@@ -6,7 +6,13 @@ import { authKey } from "./constants/auth";
 type Role = keyof typeof roleBasedPrivateRoutes;
 
 const AuthRoutes = ["/login", "/register"];
-const protectedRoutes = ["/dashboard", "/submit-found-items", "/submit-lost-items"];
+const protectedRoutes = [
+	"/dashboard",
+	"/submit-found-items",
+	"/submit-lost-items",
+	"/submit-claim-items",
+	"/profile",
+];
 const roleBasedPrivateRoutes = {
 	ADMIN: [/^\/dashboard\/admin/],
 };
@@ -15,6 +21,14 @@ export function middleware(request: NextRequest) {
 	const { pathname } = request.nextUrl;
 
 	const accessToken = cookies().get(authKey)?.value;
+
+	if (!accessToken) {
+		if (AuthRoutes.includes(pathname)) {
+			return NextResponse.next();
+		} else {
+			return NextResponse.redirect(new URL("/login", request.url));
+		}
+	}
 
 	if (!accessToken) {
 		return NextResponse.redirect(new URL("/login", request.url));
@@ -45,10 +59,12 @@ export function middleware(request: NextRequest) {
 
 export const config = {
 	matcher: [
-		// "/login",
-		// "/register",
+		"/login",
+		"/register",
 		"/dashboard/:page*",
 		"/submit-found-items",
 		"/submit-lost-items",
+		"/submit-claim-items",
+		"/profile",
 	],
 };
