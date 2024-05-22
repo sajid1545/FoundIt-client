@@ -65,9 +65,10 @@ const MyLostItems = () => {
 									<Box
 										sx={{
 											p: 2,
+											px: 4,
 											border: "1px solid #C8EDFD",
 											background: "#f4f7fe",
-											minWidth: "300px",
+											width: "100%",
 											textAlign: "center",
 										}}>
 										<Typography color={"text.secondary"} variant="caption">
@@ -79,9 +80,10 @@ const MyLostItems = () => {
 									<Box
 										sx={{
 											p: 2,
+											px: 4,
 											border: "1px solid #C8EDFD",
 											background: "#f4f7fe",
-											minWidth: "300px",
+											width: "100%",
 											textAlign: "center",
 										}}>
 										<Typography color={"text.secondary"} variant="caption">
@@ -94,16 +96,20 @@ const MyLostItems = () => {
 									<Box
 										sx={{
 											p: 2,
+											px: 4,
 											border: "1px solid #C8EDFD",
 											background: "#f4f7fe",
-											minWidth: "300px",
+											width: "100%",
 											textAlign: "center",
 										}}>
 										<Typography color={"text.secondary"} variant="caption">
 											Action
 										</Typography>
 										<Box sx={{ display: "flex", alignItems: "center", gap: 5 }}>
-											<Button size="small" fullWidth onClick={() => handleOpenModal(item?.id)}>
+											<Button
+												size="small"
+												sx={{ display: "block", mx: "auto" }}
+												onClick={() => handleOpenModal(item?.id)}>
 												Edit
 											</Button>
 											{/* <Button size="small" color="error" fullWidth>

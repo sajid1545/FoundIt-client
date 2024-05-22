@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useState } from "react";
 import EditProfileModal from "./components/EditProfileModal";
 import MyClaimedRequests from "./components/MyClaimedRequests";
+import MyFoundItems from "./components/MyFoundItems";
 import MyInformation from "./components/MyInformations";
 import MyLostItems from "./components/MyLostItems";
 
@@ -86,6 +87,9 @@ const MyProfile = () => {
 
 			{/* My lost items */}
 			<MyLostItems />
+
+			{/* My Found items */}
+			<MyFoundItems />
 		</Container>
 	);
 };

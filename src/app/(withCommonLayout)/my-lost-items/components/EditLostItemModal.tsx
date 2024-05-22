@@ -33,8 +33,9 @@ type TProps = {
 	id?: string;
 };
 const EditLostItemModal = ({ open, setOpen, loading, id }: TProps) => {
-	const { data, isLoading: itemsLoading } = useGetSingleLostItemQuery(id);
-
+	const { data, isLoading: itemsLoading } = useGetSingleLostItemQuery(id, {
+		skip: !id, // Skip the query if id is not defined
+	});
 	const defaultValues = {
 		categoryId: data?.categoryId || "",
 		lostItemName: data?.lostItemName || "",
@@ -73,7 +74,9 @@ const EditLostItemModal = ({ open, setOpen, loading, id }: TProps) => {
 		<>
 			<FoundItModal open={open} setOpen={setOpen} title="Edit Lost Items">
 				{itemsLoading ? (
-					<Typography>Loading...</Typography>
+					<Typography align="center" sx={{ m: 3 }} variant="h6">
+						Loading...
+					</Typography>
 				) : (
 					<FoundItForm
 						onSubmit={handleSubmit}

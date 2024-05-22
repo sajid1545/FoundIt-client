@@ -9,6 +9,7 @@ import { useCreateFoundItemMutation } from "@/redux/api/foundItems";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Container, Grid, MenuItem, Typography } from "@mui/material";
 import dayjs from "dayjs";
+import { useRouter } from "next/navigation";
 import { Controller, FieldValues, useFormContext } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -37,6 +38,7 @@ const defaultValues = {
 };
 
 const SubmitFoundItemsPage = () => {
+	const router = useRouter();
 	const formContext = useFormContext();
 
 	const { data: categories, isLoading } = useGetCategoriesQuery({});
@@ -50,6 +52,7 @@ const SubmitFoundItemsPage = () => {
 			const res = await createFoundItem(values).unwrap();
 			if (res?.id) {
 				toast.success("Item created successfully");
+				router.push("/my-found-items");
 			}
 		} catch (error) {
 			console.log(error);

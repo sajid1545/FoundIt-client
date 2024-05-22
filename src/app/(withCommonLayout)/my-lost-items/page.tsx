@@ -45,7 +45,7 @@ const MyLostItemsPage = () => {
 									padding: "40px 10px",
 								}}>
 								<Typography sx={{ fontWeight: "bold", fontSize: "18px", mb: 3 }}>
-									{item?.foundItem?.foundItemName}
+									{item?.lostItemName}
 								</Typography>
 
 								<Stack
@@ -56,6 +56,7 @@ const MyLostItemsPage = () => {
 									<Box
 										sx={{
 											p: 2,
+											px: 4,
 											border: "1px solid #C8EDFD",
 											background: "#f4f7fe",
 											minWidth: "300px",
@@ -70,6 +71,7 @@ const MyLostItemsPage = () => {
 									<Box
 										sx={{
 											p: 2,
+											px: 4,
 											border: "1px solid #C8EDFD",
 											background: "#f4f7fe",
 											minWidth: "300px",
@@ -85,6 +87,7 @@ const MyLostItemsPage = () => {
 									<Box
 										sx={{
 											p: 2,
+											px: 4,
 											border: "1px solid #C8EDFD",
 											background: "#f4f7fe",
 											minWidth: "300px",
@@ -93,8 +96,11 @@ const MyLostItemsPage = () => {
 										<Typography color={"text.secondary"} sx={{ mb: 1 }} variant="caption">
 											Action
 										</Typography>
-										<Box sx={{ display: "flex", alignItems: "center", gap: 5 }}>
-											<Button size="small" fullWidth onClick={() => handleOpenModal(item?.id)}>
+										<Box sx={{ display: "flex", alignItems: "center" }}>
+											<Button
+												size="small"
+												sx={{ display: "block", mx: "auto" }}
+												onClick={() => handleOpenModal(item?.id)}>
 												Edit
 											</Button>
 											{/* <Button size="small" color="error" fullWidth>

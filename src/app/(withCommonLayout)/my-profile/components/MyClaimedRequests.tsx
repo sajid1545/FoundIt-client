@@ -89,7 +89,19 @@ const MyClaimedRequests = () => {
 										<Typography color={"text.secondary"} variant="caption">
 											Status
 										</Typography>
-										<Typography>{item?.status}</Typography>
+										<Typography>
+											{item?.status === "REJECTED" ? (
+												<Typography fontWeight={600} color="red">
+													{item?.status}
+												</Typography>
+											) : item?.status === "APPROVED" ? (
+												<Typography fontWeight={600} color="green">
+													{item?.status}
+												</Typography>
+											) : (
+												<Typography>{item?.status}</Typography>
+											)}
+										</Typography>
 									</Box>
 								</Stack>
 							</Box>

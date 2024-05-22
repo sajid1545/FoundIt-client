@@ -22,7 +22,20 @@ export const claimItemsApi = baseApi.injectEndpoints({
 			}),
 			providesTags: [tagTypes.claimItems],
 		}),
+
+		updateFoundItemClaimStatus: build.mutation({
+			query: (data) => ({
+				method: "PUT",
+				url: `/claims/${data.id}`,
+				data: data.status,
+			}),
+			invalidatesTags: [tagTypes.foundItems, tagTypes.claimItems],
+		}),
 	}),
 });
 
-export const { useCreateClaimItemMutation, useGetMyClaimedRequestsQuery } = claimItemsApi;
+export const {
+	useCreateClaimItemMutation,
+	useGetMyClaimedRequestsQuery,
+	useUpdateFoundItemClaimStatusMutation,
+} = claimItemsApi;

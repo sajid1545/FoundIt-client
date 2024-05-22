@@ -1,59 +1,67 @@
-"use client";
-
 import FoundItDatePicker from "@/components/Forms/FoundItDatePicker";
 import FoundItForm from "@/components/Forms/FoundItForm";
 import FoundItInput from "@/components/Forms/FoundItInput";
 import { CustomBorderSelectField } from "@/components/Forms/FoundItSelect";
+import FoundItModal from "@/components/shared/FoundItModal/FoundItModal";
 import { useGetCategoriesQuery } from "@/redux/api/categoriesApi";
-import { useCreateLostItemMutation } from "@/redux/api/lostItemsApi";
+import { useGetSingleFoundItemQuery, useUpdateFoundItemMutation } from "@/redux/api/foundItems";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Button, Container, Grid, MenuItem, Typography } from "@mui/material";
+import { Button, Grid, MenuItem, Typography } from "@mui/material";
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 import { Controller, FieldValues, useFormContext } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
+type TProps = {
+	open: boolean;
+	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	data?: any;
+	loading?: boolean;
+	id?: string;
+};
+
 const validationSchema = z.object({
 	categoryId: z.string().min(1, { message: "Category is required" }),
-	lostItemName: z.string().min(1, { message: "Item Name is required" }),
+	foundItemName: z.string().min(1, { message: "Item Name is required" }),
 	description: z.string().min(1, { message: "Description is required" }),
 	location: z.string().min(1, { message: "Location is required" }),
-	lostDate: z.unknown().optional(),
+	foundDate: z.unknown().optional(),
 	email: z.string().optional(),
 	name: z.string().optional(),
 	phone: z.string().optional(),
 });
 
-const defaultValues = {
-	categoryId: "",
-	lostItemName: "",
-	description: "",
-	lostDate: "",
-	email: "",
-	name: "",
-	phone: "",
+const EditFoundItemsModal = ({ open, setOpen, loading, id }: TProps) => {
+	const { data, isLoading: itemsLoading } = useGetSingleFoundItemQuery(id, {
+		skip: !id, // Skip the query if id is not defined
+	});
 
-	location: "",
-};
-
-const SubmitLostItemsPage = () => {
+	const defaultValues = {
+		categoryId: data?.categoryId || "",
+		foundItemName: data?.foundItemName || "",
+		description: data?.description || "",
+		foundDate: data?.foundDate || "",
+		email: data?.email || "",
+		name: data?.name || "",
+		phone: data?.phone || "",
+		location: data?.location || "",
+	};
 	const router = useRouter();
-
 	const formContext = useFormContext();
 
 	const { data: categories, isLoading } = useGetCategoriesQuery({});
 
-	const [createLostItem, { isLoading: isLoadingCreateLostItem }] = useCreateLostItemMutation();
+	const [updateFoundItem, { isLoading: isLoadingUpdateFoundItem }] = useUpdateFoundItemMutation();
 
 	const handleSubmit = async (values: FieldValues) => {
-		values.lostDate = dayjs(values.lostDate).toISOString();
+		values.foundDate = dayjs(values.lostDate).toISOString();
 
 		try {
-			const res = await createLostItem(values).unwrap();
+			const res = await updateFoundItem({ id: id, data: values }).unwrap();
 			if (res?.id) {
-				toast.success("Item created successfully");
-				router.push("/my-lost-items");
+				toast.success("Item updated successfully");
+				setOpen(false);
 			}
 		} catch (error) {
 			console.log(error);
@@ -61,12 +69,12 @@ const SubmitLostItemsPage = () => {
 	};
 
 	return (
-		<Container sx={{ my: 15 }} maxWidth="xl">
-			<Typography variant="h6" sx={{ color: "text.secondary", fontWeight: "bold" }}>
-				Report Lost Items
-			</Typography>
-
-			<Box>
+		<FoundItModal open={open} setOpen={setOpen} title="Edit Found Item">
+			{itemsLoading ? (
+				<Typography align="center" sx={{ m: 3 }} variant="h6">
+					Loading...
+				</Typography>
+			) : (
 				<FoundItForm
 					onSubmit={handleSubmit}
 					resolver={zodResolver(validationSchema)}
@@ -96,7 +104,7 @@ const SubmitLostItemsPage = () => {
 						</Grid>
 
 						<Grid item xs={12} md={6}>
-							<FoundItInput label="Lost Item name" fullWidth={true} name="lostItemName" />
+							<FoundItInput label="Found Item name" fullWidth={true} name="foundItemName" />
 						</Grid>
 						<Grid item xs={12} md={6}>
 							<FoundItInput
@@ -111,7 +119,7 @@ const SubmitLostItemsPage = () => {
 						</Grid>
 
 						<Grid item xs={12} md={6}>
-							<FoundItDatePicker label="Lost Date" name="lostDate" />
+							<FoundItDatePicker label="Found Date" name="foundDate" />
 						</Grid>
 					</Grid>
 
@@ -132,7 +140,7 @@ const SubmitLostItemsPage = () => {
 					</Grid>
 
 					<Button
-						disabled={isLoadingCreateLostItem}
+						disabled={isLoadingUpdateFoundItem}
 						sx={{
 							margin: "20px 0px",
 							display: "block",
@@ -145,12 +153,12 @@ const SubmitLostItemsPage = () => {
 							},
 						}}
 						type="submit">
-						{isLoadingCreateLostItem ? "Submitting..." : "Report"}
+						{isLoadingUpdateFoundItem ? "Submitting..." : "Update"}
 					</Button>
 				</FoundItForm>
-			</Box>
-		</Container>
+			)}
+		</FoundItModal>
 	);
 };
 
-export default SubmitLostItemsPage;
+export default EditFoundItemsModal;

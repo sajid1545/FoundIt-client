@@ -21,7 +21,41 @@ export const foundItemsApi = baseApi.injectEndpoints({
 			}),
 			providesTags: [tagTypes.foundItems],
 		}),
+
+		getMyFoundItems: build.query({
+			query: () => ({
+				method: "GET",
+				url: "/found-items/my-items",
+			}),
+			providesTags: [tagTypes.foundItems],
+		}),
+
+		getSingleFoundItem: build.query({
+			query: (id) => ({
+				method: "GET",
+				url: `/found-items/${id}`,
+			}),
+			providesTags: [tagTypes.foundItems],
+		}),
+
+		updateFoundItem: build.mutation({
+			query: (data) => ({
+				method: "PATCH",
+				url: `/found-items/${data.id}`,
+				data: data.data,
+				headers: {
+					"Content-Type": "application/json",
+				},
+			}),
+			invalidatesTags: [tagTypes.foundItems],
+		}),
 	}),
 });
 
-export const { useCreateFoundItemMutation, useGetAllFoundItemsQuery } = foundItemsApi;
+export const {
+	useCreateFoundItemMutation,
+	useGetAllFoundItemsQuery,
+	useGetMyFoundItemsQuery,
+	useGetSingleFoundItemQuery,
+	useUpdateFoundItemMutation,
+} = foundItemsApi;
