@@ -14,7 +14,37 @@ export const lostItemsApi = baseApi.injectEndpoints({
 			}),
 			invalidatesTags: [tagTypes.lostItems],
 		}),
+
+		getMyLostItems: build.query({
+			query: () => ({
+				method: "GET",
+				url: "/lost-items/my-items",
+			}),
+			providesTags: [tagTypes.lostItems],
+		}),
+
+		getSingleLostItem: build.query({
+			query: (id) => ({
+				method: "GET",
+				url: `/lost-items/${id}`,
+			}),
+			providesTags: [tagTypes.lostItems],
+		}),
+
+		updateLostItem: build.mutation({
+			query: (data) => ({
+				method: "PATCH",
+				url: `/lost-items/${data.id}`,
+				data: data.data,
+			}),
+			invalidatesTags: [tagTypes.lostItems],
+		}),
 	}),
 });
 
-export const { useCreateLostItemMutation } = lostItemsApi;
+export const {
+	useCreateLostItemMutation,
+	useGetMyLostItemsQuery,
+	useGetSingleLostItemQuery,
+	useUpdateLostItemMutation,
+} = lostItemsApi;

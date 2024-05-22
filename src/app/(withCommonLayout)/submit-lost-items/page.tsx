@@ -131,6 +131,7 @@ const SubmitLostItemsPage = () => {
 					</Grid>
 
 					<Button
+						disabled={isLoadingCreateLostItem}
 						sx={{
 							margin: "20px 0px",
 							display: "block",

@@ -7,7 +7,9 @@ import { Box, Button, Container, Typography } from "@mui/material";
 import Link from "next/link";
 import { useState } from "react";
 import EditProfileModal from "./components/EditProfileModal";
+import MyClaimedRequests from "./components/MyClaimedRequests";
 import MyInformation from "./components/MyInformations";
+import MyLostItems from "./components/MyLostItems";
 
 const MyProfile = () => {
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -36,12 +38,11 @@ const MyProfile = () => {
 				}}>
 				<Typography
 					align="center"
-					variant="h3"
+					variant="h4"
 					sx={{ color: "text.secondary", mb: 2, fontWeight: "bold" }}>
 					My Profile
 				</Typography>
 
-				{/* direction={{ xs: "column", md: "row" }} */}
 				{profileLoading ? (
 					<Typography align="center" sx={{ m: 3 }} variant="h6">
 						Loading...
@@ -79,6 +80,12 @@ const MyProfile = () => {
 					</Link>
 				</Box>
 			</Box>
+
+			{/* My claimed requests */}
+			<MyClaimedRequests />
+
+			{/* My lost items */}
+			<MyLostItems />
 		</Container>
 	);
 };

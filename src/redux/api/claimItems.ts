@@ -14,7 +14,15 @@ export const claimItemsApi = baseApi.injectEndpoints({
 			}),
 			invalidatesTags: [tagTypes.claimItems],
 		}),
+
+		getMyClaimedRequests: build.query({
+			query: () => ({
+				method: "GET",
+				url: "/claims",
+			}),
+			providesTags: [tagTypes.claimItems],
+		}),
 	}),
 });
 
-export const { useCreateClaimItemMutation } = claimItemsApi;
+export const { useCreateClaimItemMutation, useGetMyClaimedRequestsQuery } = claimItemsApi;

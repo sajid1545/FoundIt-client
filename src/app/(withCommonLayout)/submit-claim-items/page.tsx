@@ -98,6 +98,7 @@ const SubmitClaimItemsPage = () => {
 					</Grid>
 
 					<Button
+						disabled={isLoadingCreateClaim}
 						sx={{
 							margin: "20px 0px",
 							display: "block",

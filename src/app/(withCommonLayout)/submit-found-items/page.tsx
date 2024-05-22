@@ -128,6 +128,7 @@ const SubmitFoundItemsPage = () => {
 					</Grid>
 
 					<Button
+						disabled={isLoadingCreateFoundItem}
 						sx={{
 							margin: "20px 0px",
 							display: "block",
