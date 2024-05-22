@@ -15,8 +15,8 @@ const PasswordConfirmationAlert = ({ open, setOpen, handleCancel }: TProps) => {
 			setOpen={setOpen}
 			title="Password mismatch error ⚠️⚠️⚠️⚠️ "
 			handleCancel={handleCancel}>
-			<Typography variant="h6" color="error" align="center">
-				Password and Confirm Password do not match
+			<Typography variant="body2" color="error" align="center">
+				Password and Confirm Password do not match. Please Try again with correct password
 			</Typography>
 		</FoundItAlert>
 	);

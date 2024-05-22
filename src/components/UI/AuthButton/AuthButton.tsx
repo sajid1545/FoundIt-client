@@ -28,6 +28,7 @@ const AuthButton = () => {
 					href="/login"
 					sx={{
 						my: 2,
+						mx: 4,
 						color: "white",
 						backgroundColor: "primary.main",
 						overflow: "hidden",

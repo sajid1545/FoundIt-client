@@ -62,7 +62,7 @@ function NavBar() {
 						disableGutters
 						sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 5 }}>
 						{/* LARGE DISPLAY LOGO */}
-						<Box sx={{ mr: 2, display: { xs: "none", md: "flex" } }}>
+						<Box sx={{ mr: 2, mx: 4, display: { xs: "none", md: "flex" } }}>
 							<Link href={"/"}>
 								<Image
 									src={logo}
