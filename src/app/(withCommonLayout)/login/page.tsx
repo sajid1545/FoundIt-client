@@ -145,6 +145,7 @@ const LoginPage = () => {
 										color: "white",
 									},
 								}}
+								disabled={loading}
 								fullWidth={true}
 								type="submit">
 								{loading ? "Loading..." : "Login"}

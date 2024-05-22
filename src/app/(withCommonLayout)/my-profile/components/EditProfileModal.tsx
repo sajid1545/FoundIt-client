@@ -2,6 +2,7 @@ import FoundItForm from "@/components/Forms/FoundItForm";
 import FoundItInput from "@/components/Forms/FoundItInput";
 import FoundItModal from "@/components/shared/FoundItModal/FoundItModal";
 import { useUpdateMyProfileMutation } from "@/redux/api/myProfile";
+import { logoutUser } from "@/services/actions/logoutUser";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Grid, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
@@ -33,7 +34,9 @@ const EditProfileModal = ({ open, setOpen, data, loading }: TProps) => {
 			if (res?.id) {
 				toast.success("Profile updated successfully");
 				setOpen(false);
-				// logoutUser(router);
+				if (data?.user?.email !== values.email) {
+					logoutUser(router);
+				}
 			}
 		} catch (error) {
 			console.log(error);

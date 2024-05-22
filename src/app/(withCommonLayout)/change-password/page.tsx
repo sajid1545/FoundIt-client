@@ -143,9 +143,10 @@ const ChangePassword = () => {
 										color: "white",
 									},
 								}}
+								disabled={isLoading}
 								fullWidth={true}
 								type="submit">
-								{isLoading ? "Loading..." : "Change Password"}
+								{isLoading ? "Changing..." : "Change Password"}
 							</Button>
 						</FoundItForm>
 					</Box>
