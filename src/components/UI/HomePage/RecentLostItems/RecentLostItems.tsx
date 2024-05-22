@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const RecentLostItems = async () => {
 	const res = await fetch(`${process.env.BACKEND_HOSTED_LINK}/lost-items`, {
-		next: { revalidate: 60 },
+		cache: "no-store",
 	});
 	const data = await res.json();
 

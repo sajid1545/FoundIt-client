@@ -1,7 +1,7 @@
 import { SxProps, TextField, styled } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 
-const WhiteBorderTextField = styled(TextField)`
+export const CustomBorderTextField = styled(TextField)`
 	& label.Mui-focused {
 		color: #2ab29f;
 	}
@@ -31,6 +31,7 @@ const FoundItInput = ({
 	fullWidth,
 	sx,
 	required,
+	placeholder,
 }: TInputProps) => {
 	const { control } = useFormContext();
 	return (
@@ -38,7 +39,7 @@ const FoundItInput = ({
 			control={control}
 			name={name}
 			render={({ field, fieldState: { error } }) => (
-				<WhiteBorderTextField
+				<CustomBorderTextField
 					{...field}
 					sx={{ ...sx }}
 					label={label}
@@ -46,7 +47,7 @@ const FoundItInput = ({
 					variant="outlined"
 					size={size}
 					fullWidth={fullWidth}
-					placeholder={label}
+					placeholder={placeholder ? placeholder : label}
 					required={required}
 					error={!!error?.message}
 					helperText={error?.message}

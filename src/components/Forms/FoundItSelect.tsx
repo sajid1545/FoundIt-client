@@ -1,5 +1,16 @@
-import { MenuItem, SxProps, TextField } from "@mui/material";
+import { MenuItem, SxProps, TextField, styled } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
+
+export const CustomBorderSelectField = styled(TextField)`
+	& label.Mui-focused {
+		color: #2ab29f;
+	}
+	& .MuiOutlinedInput-root {
+		&.Mui-focused fieldset {
+			border-color: #2ab29f;
+		}
+	}
+`;
 
 interface ITextField {
 	name: string;
@@ -41,7 +52,7 @@ const FoundItSelectField = ({
 					fullWidth={fullWidth}
 					error={isError}
 					helperText={isError ? (formState.errors[name]?.message as string) : ""}>
-					{items.map((name) => (
+					{items?.map((name) => (
 						<MenuItem key={name} value={name}>
 							{name}
 						</MenuItem>

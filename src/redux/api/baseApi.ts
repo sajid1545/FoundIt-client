@@ -7,7 +7,7 @@ export const baseApi = createApi({
 	reducerPath: "api",
 	baseQuery: axiosBaseQuery({
 		// baseUrl: "http://localhost:5000/api/v1"
-		baseUrl: `${process.env.BACKEND_HOSTED_LINK}/api`,
+		baseUrl: `https://assignment-9-server-delta.vercel.app/api`,
 	}),
 	endpoints: () => ({}),
 	tagTypes: tagTypesList,

@@ -37,10 +37,10 @@ instance.interceptors.response.use(
 		};
 		return responseObject;
 	},
-	async function (error) {
-		const config = error.config;
+	function (error) {
+		console.log("🚀 ~ error:", error);
 
-		console.log(error);
+		return Promise.reject(error);
 	}
 );
 
