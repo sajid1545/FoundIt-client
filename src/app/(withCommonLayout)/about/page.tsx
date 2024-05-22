@@ -82,7 +82,7 @@ const AboutUsPage = () => {
 						<Box
 							key={index}
 							sx={{
-								border: "1px solid #f8f8f8",
+								border: "1px solid #C8EDFD",
 								borderRadius: "3px",
 								p: 8,
 								m: 2,
