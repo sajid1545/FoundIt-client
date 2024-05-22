@@ -103,6 +103,20 @@ function NavBar() {
 									About Us
 								</Typography>
 							</Link>
+							<Link href="/found-items">
+								<Typography
+									sx={{
+										color: "primary.main",
+										fontWeight: "bold",
+										"&:hover": {
+											color: "#739bff",
+											transition: "all 0.5s ease",
+										},
+									}}
+									textAlign="center">
+									Found Items
+								</Typography>
+							</Link>
 
 							<AuthLinks />
 						</Box>
@@ -142,6 +156,11 @@ function NavBar() {
 								<MenuItem onClick={handleCloseNavMenu}>
 									<Link href="/about">
 										<Typography textAlign="center">About Us</Typography>
+									</Link>
+								</MenuItem>
+								<MenuItem onClick={handleCloseNavMenu}>
+									<Link href="/found-items">
+										<Typography textAlign="center">Found Items</Typography>
 									</Link>
 								</MenuItem>
 

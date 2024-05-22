@@ -64,7 +64,8 @@ export const config = {
 	matcher: [
 		"/login",
 		"/register",
-		"/dashboard/:page*",
+		"/dashboard",
+		// "/dashboard/:page*",
 		"/submit-found-items",
 		"/submit-lost-items",
 		"/submit-claim-items",
