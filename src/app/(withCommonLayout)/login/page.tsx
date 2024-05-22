@@ -47,10 +47,10 @@ const RegisterPage = () => {
 			try {
 				const res = await userLogin(rest);
 				if (res?.data?.token) {
-					setLoading(false);
 					setToLocalStorage(authKey, res?.data?.token);
 					router.push("/");
 					router.refresh();
+					setLoading(false);
 				}
 			} catch (error) {
 				console.log(error);

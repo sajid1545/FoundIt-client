@@ -15,7 +15,7 @@ const AuthButton = () => {
 
 	return (
 		<>
-			{userInfo?.id ? (
+			{userInfo ? (
 				<Button onClick={handleLogout} color="error">
 					Logout
 				</Button>

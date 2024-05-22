@@ -52,8 +52,8 @@ const RegisterPage = () => {
 				if (res.statusCode === 201) {
 					toast.success("User created successfully");
 
-					setLoading(false);
 					router.push("/login");
+					setLoading(false);
 					const result = await userLogin({
 						email: values?.patient?.email,
 						password: values?.password,

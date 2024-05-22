@@ -1,16 +1,9 @@
-import {
-	Button,
-	Dialog,
-	DialogActions,
-	DialogContent,
-	DialogContentText,
-	DialogTitle,
-} from "@mui/material";
+import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
 import * as React from "react";
 type TProps = {
 	open: boolean;
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-	children: React.ReactNode;
+	children?: React.ReactNode;
 	title: string;
 	handleConfirm?: () => void;
 	handleCancel: () => void;
@@ -32,9 +25,7 @@ export default function FoundItAlert({
 				aria-labelledby="alert-dialog-title"
 				aria-describedby="alert-dialog-description">
 				<DialogTitle id="alert-dialog-title">{title}</DialogTitle>
-				<DialogContent>
-					<DialogContentText id="alert-dialog-description">{children}</DialogContentText>
-				</DialogContent>
+
 				<DialogActions>
 					<Button onClick={handleCancel} autoFocus color="error">
 						Cancel
