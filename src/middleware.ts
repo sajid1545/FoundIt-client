@@ -11,7 +11,7 @@ const protectedRoutes = [
 	"/submit-found-items",
 	"/submit-lost-items",
 	"/submit-claim-items",
-	"/profile",
+	"/my-profile",
 ];
 const roleBasedPrivateRoutes = {
 	ADMIN: [/^\/dashboard\/admin/],
@@ -65,6 +65,6 @@ export const config = {
 		"/submit-found-items",
 		"/submit-lost-items",
 		"/submit-claim-items",
-		"/profile",
+		"/my-profile",
 	],
 };

@@ -36,6 +36,8 @@ const RegisterPage = () => {
 
 	const [loading, setLoading] = useState<boolean>(false);
 
+	const [error, setError] = useState<string>("");
+
 	const handleLogin = async (values: FieldValues) => {
 		const { confirmPassword, ...rest } = values;
 
@@ -53,13 +55,13 @@ const RegisterPage = () => {
 					router.refresh();
 					toast.success("Logged in successfully");
 					setLoading(false);
+				} else {
+					setError("Invalid credentials");
+					toast.error("Invalid credentials");
 				}
 			} catch (error) {
 				console.log(error);
-				setLoading(false);
 			}
-		} else {
-			setLoading(false);
 		}
 	};
 

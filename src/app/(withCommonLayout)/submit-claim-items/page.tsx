@@ -38,8 +38,6 @@ const SubmitClaimItemsPage = () => {
 	const handleSubmit = async (values: FieldValues) => {
 		values.lostDate = dayjs(values.lostDate).toISOString();
 
-		console.log(values);
-
 		try {
 			const res = await createClaim(values).unwrap();
 			if (res?.id) {
