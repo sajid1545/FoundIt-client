@@ -49,8 +49,11 @@ const MyFoundItemsPage = () => {
 							<Box
 								key={item.id}
 								sx={{
+									display: "flex",
+									flexDirection: { xs: "column" },
 									flex: 1,
-									width: { xs: "100%", md: "150px" },
+									justifyContent: "center",
+									alignItems: "center",
 									backgroundColor: "#C8EDFD)",
 									border: "1px solid #C8EDFD",
 									borderRadius: "10px",
@@ -134,12 +137,21 @@ const MyFoundItemsPage = () => {
 									gap={2}
 									flexWrap={"wrap"}
 									justifyContent={"center"}>
+									{item?.claim?.length === 0 && (
+										<Typography sx={{ fontWeight: "bold", fontSize: "18px" }}>
+											No Claim For This Item
+										</Typography>
+									)}
 									{item?.claim?.map((item: any) => {
 										return (
 											<Box
 												key={item?.id}
 												sx={{
 													display: "flex",
+													flexDirection: { xs: "column", md: "row" },
+													flexWrap: "wrap",
+													justifyContent: "center",
+													alignItems: "center",
 													gap: 2,
 													backgroundColor: "#C8EDFD)",
 													border: "1px solid #C8EDFD",

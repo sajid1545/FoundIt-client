@@ -60,8 +60,11 @@ const MyFoundItems = () => {
 							<Box
 								key={item.id}
 								sx={{
+									display: "flex",
 									flex: 1,
-									width: { xs: "100%", md: "150px" },
+									flexDirection: "column",
+									alignItems: "center",
+									justifyContent: "center",
 									backgroundColor: "#C8EDFD)",
 									border: "1px solid #C8EDFD",
 									borderRadius: "10px",
@@ -87,7 +90,7 @@ const MyFoundItems = () => {
 									<Box
 										sx={{
 											p: 2,
-											px: 4,
+											px: 2,
 											border: "1px solid #C8EDFD",
 											background: "#f4f7fe",
 											width: "300px",
@@ -101,7 +104,7 @@ const MyFoundItems = () => {
 									<Box
 										sx={{
 											p: 2,
-											px: 4,
+											px: 2,
 											border: "1px solid #C8EDFD",
 											background: "#f4f7fe",
 											width: "300px",
@@ -117,7 +120,7 @@ const MyFoundItems = () => {
 									<Box
 										sx={{
 											p: 2,
-											px: 4,
+											px: 2,
 											border: "1px solid #C8EDFD",
 											background: "#f4f7fe",
 											width: "300px",
@@ -143,13 +146,23 @@ const MyFoundItems = () => {
 									gap={2}
 									flexWrap={"wrap"}
 									justifyContent={"center"}>
+									{item?.claim?.length === 0 && (
+										<Typography sx={{ fontWeight: "bold", fontSize: "18px" }}>
+											No Claim For This Item
+										</Typography>
+									)}
+
 									{item?.claim?.map((item: any) => {
 										return (
 											<Box
 												key={item?.id}
 												sx={{
 													display: "flex",
-													gap: 2,
+													flexDirection: { xs: "column", md: "row" },
+													flexWrap: "wrap",
+													justifyContent: "center",
+													alignItems: "center",
+													gap: 1,
 													backgroundColor: "#C8EDFD)",
 													border: "1px solid #C8EDFD",
 													borderRadius: "10px",
@@ -159,7 +172,7 @@ const MyFoundItems = () => {
 												<Box
 													sx={{
 														p: 2,
-														px: 4,
+														px: 2,
 														border: "1px solid #C8EDFD",
 														background: "#f4f7fe",
 														width: "300px",
@@ -173,7 +186,7 @@ const MyFoundItems = () => {
 												<Box
 													sx={{
 														p: 2,
-														px: 4,
+														px: 2,
 														border: "1px solid #C8EDFD",
 														background: "#f4f7fe",
 														width: "300px",
@@ -199,7 +212,7 @@ const MyFoundItems = () => {
 												<Box
 													sx={{
 														p: 2,
-														px: 4,
+														px: 2,
 														border: "1px solid #C8EDFD",
 														background: "#f4f7fe",
 														width: "300px",
