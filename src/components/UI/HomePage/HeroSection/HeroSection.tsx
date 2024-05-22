@@ -45,7 +45,7 @@ const HeroSection = () => {
 					</Typography>
 				</Box>
 				<Box sx={{ display: "flex", gap: 4 }}>
-					<Link href="/">
+					<Link href="/submit-lost-items">
 						<Button
 							sx={{
 								fontWeight: "bold",

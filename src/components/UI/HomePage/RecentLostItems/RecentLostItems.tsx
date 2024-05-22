@@ -45,10 +45,10 @@ const RecentLostItems = async () => {
 							<Typography component="p" fontWeight={600} fontSize={18} mt={2}>
 								{item.lostItemName}
 							</Typography>
-							<Typography component="p" fontWeight={600} fontSize={18} mt={2}>
+							<Typography variant="subtitle1" fontWeight={600} mt={2}>
 								{item.description}
 							</Typography>
-							<Typography component="p" fontWeight={600} fontSize={18} mt={2}>
+							<Typography variant="subtitle1" fontWeight={600} mt={2}>
 								{item.location} - {dateFormatter(item.createdAt)} {timeFormatter(item.createdAt)}
 							</Typography>
 
