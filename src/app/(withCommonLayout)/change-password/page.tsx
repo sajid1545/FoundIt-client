@@ -1,15 +1,13 @@
 "use client";
 
-import loginIllustration from "@/assets/icons/register.png";
+import changePasswordImage from "@/assets/svgs/changePassword.svg";
 import FoundItForm from "@/components/Forms/FoundItForm";
 import FoundItInput from "@/components/Forms/FoundItInput";
-import { authKey } from "@/constants/auth";
-import { userLogin } from "@/services/actions/userLogin";
-import { setToLocalStorage } from "@/utils/localStorage";
+import { useChangePasswordMutation } from "@/redux/api/authApi";
+import { logoutUser } from "@/services/actions/logoutUser";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldValues } from "react-hook-form";
@@ -18,54 +16,44 @@ import { z } from "zod";
 import PasswordConfirmationAlert from "../components/PasswordConfirmationAlert/PasswordConfirmationAlert";
 
 const validationSchema = z.object({
-	email: z.string().email({ message: "Invalid email address" }),
-	password: z.string().min(1, { message: "Password is required" }),
+	currentPassword: z.string().min(1, { message: "Current Password is required" }),
+	newPassword: z.string().min(1, { message: "New Password is required" }),
 	confirmPassword: z.string().min(1, { message: "Confirm Password is required" }),
 });
 
 const defaultValues = {
-	email: "",
-	password: "",
+	currentPassword: "",
+	newPassword: "",
 	confirmPassword: "",
 };
 
-const LoginPage = () => {
+const ChangePassword = () => {
 	const router = useRouter();
-
 	const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
-
-	const [loading, setLoading] = useState<boolean>(false);
-
-	const [error, setError] = useState<string>("");
+	const [changePassword, { isLoading }] = useChangePasswordMutation();
 
 	const handleLogin = async (values: FieldValues) => {
 		const { confirmPassword, ...rest } = values;
 
-		if (rest.password !== confirmPassword) {
+		if (rest.newPassword !== confirmPassword) {
 			setIsDialogOpen(true);
 		}
 
-		setLoading(true);
-		if (rest.password === confirmPassword) {
+		if (rest.newPassword === confirmPassword) {
 			try {
-				const res = await userLogin(rest);
-				if (res?.data?.token) {
-					setToLocalStorage(authKey, res?.data?.token);
-					router.push("/");
-					router.refresh();
-					toast.success("Logged in successfully");
-					setLoading(false);
+				const res = await changePassword(rest).unwrap();
+
+				if (res?.status === 200) {
+					logoutUser(router);
+					toast.success("Password changed successfully");
 				} else {
-					setError("Invalid credentials");
-					toast.error("Invalid credentials");
-					setLoading(false);
+					throw new Error("Incorrect  Password");
 				}
 			} catch (error) {
 				console.log(error);
-				setLoading(false);
+				toast.error("Something went wrong");
 			}
 		}
-		setLoading(false);
 	};
 
 	const handleCancel = () => {
@@ -105,11 +93,11 @@ const LoginPage = () => {
 							justifyContent="space-between">
 							<Box my={2}>
 								<Typography variant="h5" fontWeight={600} color={"#2B4D46"}>
-									Login with FoundIt
+									Change Password
 								</Typography>
 							</Box>
 							<Box>
-								<Image src={loginIllustration} width={100} height={100} alt="logo" />
+								<Image src={changePasswordImage} width={100} height={100} alt="logo" />
 							</Box>
 						</Stack>
 					</Box>
@@ -121,10 +109,20 @@ const LoginPage = () => {
 							defaultValues={defaultValues}>
 							<Grid container spacing={2} my={1}>
 								<Grid item xs={12}>
-									<FoundItInput label="Email" type="email" fullWidth={true} name="email" />
+									<FoundItInput
+										label="Current Password"
+										type="password"
+										fullWidth={true}
+										name="currentPassword"
+									/>
 								</Grid>
 								<Grid item xs={12} md={6}>
-									<FoundItInput label="Password" type="password" fullWidth={true} name="password" />
+									<FoundItInput
+										label="New Password"
+										type="password"
+										fullWidth={true}
+										name="newPassword"
+									/>
 								</Grid>
 								<Grid item xs={12} md={6}>
 									<FoundItInput
@@ -147,14 +145,8 @@ const LoginPage = () => {
 								}}
 								fullWidth={true}
 								type="submit">
-								{loading ? "Loading..." : "Login"}
+								{isLoading ? "Loading..." : "Change Password"}
 							</Button>
-							<Typography component="p" fontWeight={300}>
-								Don&apos;t have an account?{" "}
-								<Link style={{ color: "#2AB29F" }} href="/register">
-									Create an account
-								</Link>
-							</Typography>
 						</FoundItForm>
 					</Box>
 				</Box>
@@ -163,4 +155,4 @@ const LoginPage = () => {
 	);
 };
 
-export default LoginPage;
+export default ChangePassword;

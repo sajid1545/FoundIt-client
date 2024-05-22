@@ -4,6 +4,7 @@ import FoundItModal from "@/components/shared/FoundItModal/FoundItModal";
 import { useUpdateMyProfileMutation } from "@/redux/api/myProfile";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Grid, Typography } from "@mui/material";
+import { useRouter } from "next/navigation";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -15,6 +16,8 @@ type TProps = {
 };
 
 const EditProfileModal = ({ open, setOpen, data, loading }: TProps) => {
+	const router = useRouter();
+
 	const defaultValues = {
 		email: data?.user?.email || "",
 		age: data?.age || "",
@@ -30,6 +33,7 @@ const EditProfileModal = ({ open, setOpen, data, loading }: TProps) => {
 			if (res?.id) {
 				toast.success("Profile updated successfully");
 				setOpen(false);
+				// logoutUser(router);
 			}
 		} catch (error) {
 			console.log(error);

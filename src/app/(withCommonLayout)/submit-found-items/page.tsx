@@ -59,7 +59,7 @@ const SubmitFoundItemsPage = () => {
 	return (
 		<Container sx={{ my: 15 }} maxWidth="xl">
 			<Typography variant="h6" sx={{ color: "text.secondary", fontWeight: "bold" }}>
-				Report Lost Items
+				Report Found Items
 			</Typography>
 
 			<Box>
