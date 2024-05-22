@@ -46,7 +46,7 @@ const RegisterPage = () => {
 		if (rest.password === confirmPassword) {
 			try {
 				const res = await userLogin(rest);
-				if (res.data?.token) {
+				if (res?.data?.token) {
 					setLoading(false);
 					setToLocalStorage(authKey, res?.data?.token);
 					router.push("/");

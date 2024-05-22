@@ -58,7 +58,7 @@ const HeroSection = () => {
 						</Button>
 					</Link>
 
-					<Link href="/lost">
+					<Link href="/submit-found-items">
 						<Button
 							sx={{
 								fontWeight: "bold",

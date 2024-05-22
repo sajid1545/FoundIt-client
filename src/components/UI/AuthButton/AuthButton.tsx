@@ -1,4 +1,4 @@
-import { authKey } from "@/constants/auth";
+import { logoutUser } from "@/services/actions/logoutUser";
 import { getUserInfo } from "@/utils/localStorage";
 import { Button } from "@mui/material";
 import Link from "next/link";
@@ -10,10 +10,7 @@ const AuthButton = () => {
 	const userInfo = getUserInfo();
 
 	const handleLogout = () => {
-		localStorage.removeItem(authKey);
-
-		router.push("/login");
-		router.refresh();
+		logoutUser(router);
 	};
 
 	return (

@@ -5,21 +5,20 @@ import FoundItForm from "@/components/Forms/FoundItForm";
 import FoundItInput from "@/components/Forms/FoundItInput";
 import { CustomBorderSelectField } from "@/components/Forms/FoundItSelect";
 import { useGetCategoriesQuery } from "@/redux/api/categoriesApi";
-import { useCreateLostItemMutation } from "@/redux/api/lostItemsApi";
+import { useCreateFoundItemMutation } from "@/redux/api/foundItems";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Container, Grid, MenuItem, Typography } from "@mui/material";
 import dayjs from "dayjs";
-import { useRouter } from "next/navigation";
 import { Controller, FieldValues, useFormContext } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
 const validationSchema = z.object({
 	categoryId: z.string().min(1, { message: "Category is required" }),
-	lostItemName: z.string().min(1, { message: "Item Name is required" }),
+	foundItemName: z.string().min(1, { message: "Item Name is required" }),
 	description: z.string().min(1, { message: "Description is required" }),
 	location: z.string().min(1, { message: "Location is required" }),
-	lostDate: z.unknown().optional(),
+	foundDate: z.unknown().optional(),
 	email: z.string().optional(),
 	name: z.string().optional(),
 	phone: z.string().optional(),
@@ -27,9 +26,9 @@ const validationSchema = z.object({
 
 const defaultValues = {
 	categoryId: "",
-	lostItemName: "",
+	foundItemName: "",
 	description: "",
-	lostDate: "",
+	foundDate: "",
 	email: "",
 	name: "",
 	phone: "",
@@ -37,20 +36,18 @@ const defaultValues = {
 	location: "",
 };
 
-const SubmitLostItemsPage = () => {
-	const router = useRouter();
-
+const SubmitFoundItemsPage = () => {
 	const formContext = useFormContext();
 
 	const { data: categories, isLoading } = useGetCategoriesQuery({});
 
-	const [createLostItem, { isLoading: isLoadingCreateLostItem }] = useCreateLostItemMutation();
+	const [createFoundItem, { isLoading: isLoadingCreateFoundItem }] = useCreateFoundItemMutation();
 
 	const handleSubmit = async (values: FieldValues) => {
-		values.lostDate = dayjs(values.lostDate).toISOString();
+		values.foundDate = dayjs(values.lostDate).toISOString();
 
 		try {
-			const res = await createLostItem(values).unwrap();
+			const res = await createFoundItem(values).unwrap();
 			if (res?.id) {
 				toast.success("Item created successfully");
 			}
@@ -95,7 +92,7 @@ const SubmitLostItemsPage = () => {
 						</Grid>
 
 						<Grid item xs={12} md={6}>
-							<FoundItInput label="Lost Item name" fullWidth={true} name="lostItemName" />
+							<FoundItInput label="Lost Item name" fullWidth={true} name="foundItemName" />
 						</Grid>
 						<Grid item xs={12} md={6}>
 							<FoundItInput
@@ -110,7 +107,7 @@ const SubmitLostItemsPage = () => {
 						</Grid>
 
 						<Grid item xs={12} md={6}>
-							<FoundItDatePicker label="Lost Date" name="lostDate" />
+							<FoundItDatePicker label="Found Date" name="foundDate" />
 						</Grid>
 					</Grid>
 
@@ -143,7 +140,7 @@ const SubmitLostItemsPage = () => {
 							},
 						}}
 						type="submit">
-						{isLoadingCreateLostItem ? "Submitting..." : "Report"}
+						{isLoadingCreateFoundItem ? "Submitting..." : "Report"}
 					</Button>
 				</FoundItForm>
 			</Box>
@@ -151,4 +148,4 @@ const SubmitLostItemsPage = () => {
 	);
 };
 
-export default SubmitLostItemsPage;
+export default SubmitFoundItemsPage;
