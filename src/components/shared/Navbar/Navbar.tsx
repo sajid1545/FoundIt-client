@@ -17,9 +17,12 @@ import { useEffect, useState } from "react";
 import logo from "../../../assets/found-logo.jpeg";
 
 function NavBar() {
-	const router = useRouter();
 	const AuthButton = dynamic(() => import("@/components/UI/AuthButton/AuthButton"), { ssr: false });
 	const AuthLinks = dynamic(() => import("@/components/UI/AuthLinks/AuthLinks"), { ssr: false });
+	const AuthMenuItems = dynamic(() => import("@/components/UI/AuthMenuItems/AuthMenuItems"), {
+		ssr: false,
+	});
+	const router = useRouter();
 	const [anchorElNav, setAnchorElNav] = useState<HTMLButtonElement | null>(null);
 	const [anchorElUser, setAnchorElUser] = useState<HTMLButtonElement | null>(null);
 
@@ -142,20 +145,7 @@ function NavBar() {
 									</Link>
 								</MenuItem>
 
-								{user && (
-									<>
-										<MenuItem onClick={handleCloseNavMenu}>
-											<Link href="/my-profile">
-												<Typography textAlign="center">My Profile</Typography>
-											</Link>
-										</MenuItem>
-										<MenuItem onClick={handleCloseNavMenu}>
-											<Link href={`/dashboard/${user.role}`}>
-												<Typography textAlign="center">Dashboard</Typography>
-											</Link>
-										</MenuItem>
-									</>
-								)}
+								<AuthMenuItems handleCloseNavMenu={handleCloseNavMenu} />
 							</Menu>
 						</Box>
 

@@ -22,22 +22,24 @@ const AuthLinks = () => {
 							My profile
 						</Typography>
 					</Link>
-
-					<Link href={`/dashboard/${userInfo?.role}`}>
-						<Typography
-							sx={{
-								color: "primary.main",
-								fontWeight: "bold",
-								"&:hover": {
-									color: "#739bff",
-									transition: "all 0.5s ease",
-								},
-							}}
-							textAlign="center">
-							Dashboard
-						</Typography>
-					</Link>
 				</>
+			)}
+
+			{userInfo?.role === "admin" && (
+				<Link href={`/dashboard/${userInfo?.role}`}>
+					<Typography
+						sx={{
+							color: "primary.main",
+							fontWeight: "bold",
+							"&:hover": {
+								color: "#739bff",
+								transition: "all 0.5s ease",
+							},
+						}}
+						textAlign="center">
+						Dashboard
+					</Typography>
+				</Link>
 			)}
 		</>
 	);
