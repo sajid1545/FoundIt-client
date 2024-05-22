@@ -1,22 +1,33 @@
 "use client";
 
+import { getUserInfo } from "@/utils/localStorage";
 import MenuIcon from "@mui/icons-material/Menu";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import logo from "../../../assets/found-logo.jpeg";
 
 function NavBar() {
+	const router = useRouter();
+	const AuthButton = dynamic(() => import("@/components/UI/AuthButton/AuthButton"), { ssr: false });
+	const AuthLinks = dynamic(() => import("@/components/UI/AuthLinks/AuthLinks"), { ssr: false });
 	const [anchorElNav, setAnchorElNav] = useState<HTMLButtonElement | null>(null);
 	const [anchorElUser, setAnchorElUser] = useState<HTMLButtonElement | null>(null);
+
+	const [user, setUser] = useState<any>(null);
+
+	useEffect(() => {
+		setUser(getUserInfo());
+	}, []);
 
 	const handleOpenNavMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorElNav(event.currentTarget);
@@ -49,17 +60,25 @@ function NavBar() {
 						sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 5 }}>
 						{/* LARGE DISPLAY LOGO */}
 						<Box sx={{ mr: 2, display: { xs: "none", md: "flex" } }}>
-							<Image src={logo} alt="logo" width={60} height={60} style={{ borderRadius: "50%" }} />
+							<Link href={"/"}>
+								<Image
+									src={logo}
+									alt="logo"
+									width={60}
+									height={60}
+									style={{ borderRadius: "50%" }}
+								/>
+							</Link>
 						</Box>
 
 						<Box sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}>
-							<Link href="/about">
+							<Link href="/">
 								<Typography
 									sx={{
-										color: "secondary.main",
+										color: "primary.main",
 										fontWeight: "bold",
 										"&:hover": {
-											color: "white",
+											color: "#739bff",
 											transition: "all 0.5s ease",
 										},
 									}}
@@ -70,10 +89,10 @@ function NavBar() {
 							<Link href="/about">
 								<Typography
 									sx={{
-										color: "secondary.main",
+										color: "primary.main",
 										fontWeight: "bold",
 										"&:hover": {
-											color: "white",
+											color: "#739bff",
 											transition: "all 0.5s ease",
 										},
 									}}
@@ -81,20 +100,8 @@ function NavBar() {
 									About Us
 								</Typography>
 							</Link>
-							<Link href="/about">
-								<Typography
-									sx={{
-										color: "secondary.main",
-										fontWeight: "bold",
-										"&:hover": {
-											color: "white",
-											transition: "all 0.5s ease",
-										},
-									}}
-									textAlign="center">
-									My profile
-								</Typography>
-							</Link>
+
+							<AuthLinks />
 						</Box>
 
 						{/* hamburger icon */}
@@ -105,7 +112,7 @@ function NavBar() {
 								aria-controls="menu-appbar"
 								aria-haspopup="true"
 								onClick={handleOpenNavMenu}>
-								<MenuIcon sx={{ color: "white" }} />
+								<MenuIcon sx={{ color: "primary.main" }} />
 							</IconButton>
 							<Menu
 								id="menu-appbar"
@@ -125,15 +132,35 @@ function NavBar() {
 									display: { xs: "block", md: "none" },
 								}}>
 								<MenuItem onClick={handleCloseNavMenu}>
-									<Link href="/about">
-										<Typography textAlign="center">About</Typography>
+									<Link href="/home">
+										<Typography textAlign="center">Home</Typography>
 									</Link>
 								</MenuItem>
+								<MenuItem onClick={handleCloseNavMenu}>
+									<Link href="/about">
+										<Typography textAlign="center">About Us</Typography>
+									</Link>
+								</MenuItem>
+
+								{user && (
+									<>
+										<MenuItem onClick={handleCloseNavMenu}>
+											<Link href="/my-profile">
+												<Typography textAlign="center">My Profile</Typography>
+											</Link>
+										</MenuItem>
+										<MenuItem onClick={handleCloseNavMenu}>
+											<Link href={`/dashboard/${user.role}`}>
+												<Typography textAlign="center">Dashboard</Typography>
+											</Link>
+										</MenuItem>
+									</>
+								)}
 							</Menu>
 						</Box>
 
 						<Box sx={{ flexGrow: 0 }}>
-							<Button>Login</Button>
+							<AuthButton />
 						</Box>
 					</Toolbar>
 				</Box>

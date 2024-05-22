@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const Footer = () => {
 	return (
-		<Box bgcolor="#F8F8FB" sx={{ color: "#203145" }} py={5}>
+		<Box bgcolor="#EFF2F7" sx={{ color: "#203145" }} py={5}>
 			<Container>
 				<Stack direction="row" gap={5} justifyContent="center">
 					<Box>

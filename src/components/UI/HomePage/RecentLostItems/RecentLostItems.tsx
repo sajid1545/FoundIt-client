@@ -11,8 +11,6 @@ const RecentLostItems = async () => {
 
 	const lostItems = data?.data;
 
-	console.log(lostItems);
-
 	return (
 		<Container sx={{ my: 10 }} maxWidth="xl">
 			<Typography
