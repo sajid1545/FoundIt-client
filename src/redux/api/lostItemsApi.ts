@@ -62,6 +62,14 @@ export const lostItemsApi = baseApi.injectEndpoints({
 			}),
 			invalidatesTags: [tagTypes.lostItems, tagTypes.meta],
 		}),
+
+		updateLostItemFoundStatus: build.mutation({
+			query: (id) => ({
+				method: "PUT",
+				url: `/lost-items/status/${id}`,
+			}),
+			invalidatesTags: [tagTypes.lostItems, tagTypes.meta],
+		}),
 	}),
 });
 
@@ -72,4 +80,5 @@ export const {
 	useUpdateLostItemMutation,
 	useDeleteLostItemMutation,
 	useGetAllLostItemsQuery,
+	useUpdateLostItemFoundStatusMutation,
 } = lostItemsApi;

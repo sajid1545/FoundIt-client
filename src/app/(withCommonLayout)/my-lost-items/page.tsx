@@ -1,14 +1,25 @@
 "use client";
 
-import { useGetMyLostItemsQuery } from "@/redux/api/lostItemsApi";
+import {
+	useGetMyLostItemsQuery,
+	useUpdateLostItemFoundStatusMutation,
+} from "@/redux/api/lostItemsApi";
 import { dateFormatter } from "@/utils/dateFormatter";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import EditLostItemModal from "./components/EditLostItemModal";
 import LostItemDeleteConfirmation from "./components/LostItemDeleteConfirmation";
 
+interface LoadingItems {
+	[key: string]: boolean;
+}
+
 const MyLostItemsPage = () => {
+	const [loadingItems, setLoadingItems] = useState<LoadingItems>({});
+
 	const { data, isLoading } = useGetMyLostItemsQuery({});
+
+	const [changeItemStatus] = useUpdateLostItemFoundStatusMutation();
 
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 	const [id, setId] = useState<any>(null);
@@ -25,6 +36,17 @@ const MyLostItemsPage = () => {
 	const handleOpenDeleteConfirmation = (id: string) => {
 		setOpenAlert(true);
 		setIdToDelete(id);
+	};
+
+	const handleChangeItemFoundStatus = async (id: string) => {
+		setLoadingItems((prev) => ({ ...prev, [id]: true }));
+		try {
+			await changeItemStatus(id);
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setLoadingItems((prev) => ({ ...prev, [id]: false }));
+		}
 	};
 
 	return (
@@ -94,6 +116,43 @@ const MyLostItemsPage = () => {
 										<Typography>
 											{item?.location} -{dateFormatter(item?.lostDate)}{" "}
 										</Typography>
+									</Box>
+									<Box
+										sx={{
+											p: 2,
+											px: 4,
+											border: "1px solid #C8EDFD",
+											background: "#f4f7fe",
+											textAlign: "center",
+										}}>
+										<Typography color={"text.secondary"} variant="caption">
+											Item Found Status
+										</Typography>
+										<Typography
+											color={item?.itemFound ? "green" : "red"}
+											sx={{ fontWeight: "bold" }}>
+											{item?.itemFound ? "Found" : "Lost"}
+										</Typography>
+
+										<Button
+											onClick={() => handleChangeItemFoundStatus(item?.id)}
+											sx={{
+												mt: 0.5,
+												backgroundColor: "primary.main",
+												color: "white",
+												px: 1,
+												py: 0.5,
+												borderRadius: "5px",
+												cursor: "pointer",
+												"&:hover": {
+													backgroundColor: "primary.dark",
+													transition: "all 0.5s",
+												},
+											}}>
+											{/* {isUpdating ? "Changing..." : "Change Status"} */}
+											{/* Change Status */}
+											{loadingItems[item.id] ? "Loading..." : "Change Status"}
+										</Button>
 									</Box>
 									<Box
 										sx={{
