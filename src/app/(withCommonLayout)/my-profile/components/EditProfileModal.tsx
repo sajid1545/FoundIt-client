@@ -23,6 +23,7 @@ const EditProfileModal = ({ open, setOpen, data, loading }: TProps) => {
 		email: data?.user?.email || "",
 		age: data?.age || "",
 		bio: data?.bio || "",
+		name: data?.user?.name || "",
 	};
 
 	const [updateMyProfile, { isLoading }] = useUpdateMyProfileMutation({});
@@ -50,6 +51,9 @@ const EditProfileModal = ({ open, setOpen, data, loading }: TProps) => {
 					<Grid sx={{ my: 1 }} container spacing={2}>
 						<Grid item xs={12} md={6}>
 							<FoundItInput label="Email" name="email" fullWidth={true} />
+						</Grid>
+						<Grid item xs={12} md={6}>
+							<FoundItInput label="Name" name="name" fullWidth={true} />
 						</Grid>
 						<Grid item xs={12} md={6}>
 							<FoundItInput label="Age" name="age" fullWidth={true} />

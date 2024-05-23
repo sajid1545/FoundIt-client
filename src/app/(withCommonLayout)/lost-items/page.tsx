@@ -28,7 +28,7 @@ const LostItems = () => {
 
 	query["category"] = category;
 
-	const { data, isLoading } = useGetAllLostItemsQuery({ ...query });
+	const { data, isLoading, refetch } = useGetAllLostItemsQuery({ ...query });
 	const { data: categories, isLoading: categoriesLoading } = useGetCategoriesQuery({});
 
 	const lostItems = data?.lostItems || [];
@@ -80,7 +80,7 @@ const LostItems = () => {
 				</Stack>
 			</Stack>
 
-			{lostItems?.length === 0 && (
+			{lostItems?.length === 0 && !isLoading && (
 				<Typography align="center" sx={{ m: 3 }} variant="h6">
 					No Items Found
 				</Typography>
