@@ -1,3 +1,4 @@
+import { IMeta } from "@/types";
 import { tagTypes } from "../tag-types";
 import { baseApi } from "./baseApi";
 
@@ -13,6 +14,21 @@ export const lostItemsApi = baseApi.injectEndpoints({
 				},
 			}),
 			invalidatesTags: [tagTypes.lostItems, tagTypes.meta],
+		}),
+
+		getAllLostItems: build.query({
+			query: (arg: Record<string, any>) => ({
+				method: "GET",
+				url: "/lost-items",
+				params: arg,
+			}),
+			transformResponse: (response: [], meta: IMeta) => {
+				return {
+					lostItems: response,
+					meta,
+				};
+			},
+			providesTags: [tagTypes.lostItems],
 		}),
 
 		getMyLostItems: build.query({
@@ -55,4 +71,5 @@ export const {
 	useGetSingleLostItemQuery,
 	useUpdateLostItemMutation,
 	useDeleteLostItemMutation,
+	useGetAllLostItemsQuery,
 } = lostItemsApi;

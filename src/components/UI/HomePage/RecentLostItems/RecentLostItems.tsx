@@ -49,7 +49,7 @@ const RecentLostItems = async () => {
 								{item.description}
 							</Typography>
 							<Typography variant="subtitle1" fontWeight={600} mt={2}>
-								{item.location} - {dateFormatter(item.createdAt)} {timeFormatter(item.createdAt)}
+								{item.location} - {dateFormatter(item.lostDate)} {timeFormatter(item.lostDate)}
 							</Typography>
 
 							<Link href={`/lost-items/${item.id}`}>
@@ -69,27 +69,29 @@ const RecentLostItems = async () => {
 					</Box>
 				))}
 			</Stack>
-			<Button
-				variant="outlined"
-				sx={{
-					mt: "20px",
-					border: "1px solid #2AB29F",
-					color: "#203145",
-					display: "block",
-					textAlign: "center",
-					fontWeight: "bold",
-					mx: "auto",
-					my: "20px",
-
-					"&:hover": {
-						backgroundColor: "#2AB29F",
-						color: "white",
-						transition: "all 0.5s",
+			<Link href="/lost-items">
+				<Button
+					variant="outlined"
+					sx={{
+						mt: "20px",
 						border: "1px solid #2AB29F",
-					},
-				}}>
-				View ALL
-			</Button>
+						color: "#203145",
+						display: "block",
+						textAlign: "center",
+						fontWeight: "bold",
+						mx: "auto",
+						my: "20px",
+
+						"&:hover": {
+							backgroundColor: "#2AB29F",
+							color: "white",
+							transition: "all 0.5s",
+							border: "1px solid #2AB29F",
+						},
+					}}>
+					View ALL
+				</Button>
+			</Link>
 		</Container>
 	);
 };
