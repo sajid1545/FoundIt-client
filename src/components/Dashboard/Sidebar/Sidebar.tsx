@@ -28,7 +28,18 @@ const Sidebar = () => {
 				component={Link}
 				href="/"
 				justifyContent={"center"}>
-				<Typography variant="h4" sx={{ color: "primary.main", fontWeight: "bold" }}>
+				<Typography
+					variant="h5"
+					noWrap
+					sx={{
+						mr: 2,
+						display: { xs: "none", md: "flex" },
+						fontFamily: "monospace",
+						fontWeight: 900,
+						letterSpacing: ".3rem",
+						color: "primary.main",
+						textDecoration: "none",
+					}}>
 					FoundIt
 				</Typography>
 			</Stack>

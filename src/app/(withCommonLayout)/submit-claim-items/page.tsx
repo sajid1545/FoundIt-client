@@ -31,7 +31,9 @@ const SubmitClaimItemsPage = () => {
 
 	const formContext = useFormContext();
 
-	const { data: foundItems, isLoading } = useGetAllFoundItemsQuery({});
+	const { data, isLoading } = useGetAllFoundItemsQuery({});
+
+	const foundItems = data?.foundItems;
 
 	const [createClaim, { isLoading: isLoadingCreateClaim }] = useCreateClaimItemMutation();
 

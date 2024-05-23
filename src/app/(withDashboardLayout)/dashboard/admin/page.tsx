@@ -2,13 +2,13 @@
 
 // icons
 import totalActiveUserIcon from "@/assets/icons/activeUsers.png";
-import adminIcon from "@/assets/icons/adminIcon.png";
 import approvedClaims from "@/assets/icons/approvedClaimed.png";
+import categoriesIcon from "@/assets/icons/categoriesIcon.png";
 import claimsIcon from "@/assets/icons/claimedIcon.png";
 import totalFoundItemsIcon from "@/assets/icons/itemsIcon.png";
+import lostFoundItemIcon from "@/assets/icons/lostItemFound.png";
 import lostItemsIcon from "@/assets/icons/lostItems.png";
 import totalUsersIcon from "@/assets/icons/totalUserIcon.png";
-import categoriesIcon from "@/assets/icons/categoriesIcon.png";
 
 import { useGetAllMetaDataQuery } from "@/redux/api/metaApi";
 import { Container, Typography } from "@mui/material";
@@ -17,6 +17,7 @@ import { DashboardCard } from "./components/DashboardCard";
 
 const AdminDashboard = () => {
 	const { data, isLoading } = useGetAllMetaDataQuery({});
+	console.log("🚀 ~ AdminDashboard ~ data:", data);
 
 	return (
 		<Container sx={{ mt: 4 }}>
@@ -44,15 +45,7 @@ const AdminDashboard = () => {
 							iconColor="#f8f8f8"
 						/>
 					</Grid>
-					<Grid lg={3} sm={6} xs={12}>
-						<DashboardCard
-							sx={{ height: "100%" }}
-							value={data?.totalAdminCount}
-							icon={adminIcon}
-							title="Total Admin Users"
-							iconColor="#f8f8f8"
-						/>
-					</Grid>
+
 					<Grid lg={3} sm={6} xs={12}>
 						<DashboardCard
 							sx={{ height: "100%" }}
@@ -83,6 +76,15 @@ const AdminDashboard = () => {
 					<Grid lg={3} sm={6} xs={12}>
 						<DashboardCard
 							sx={{ height: "100%" }}
+							value={data?.foundLostItemsCount}
+							icon={lostFoundItemIcon}
+							title="Lost Item Found"
+							iconColor="#800000"
+						/>
+					</Grid>
+					<Grid lg={3} sm={6} xs={12}>
+						<DashboardCard
+							sx={{ height: "100%" }}
 							value={data?.claimsCount}
 							icon={claimsIcon}
 							title="Total Claimed Items"
@@ -94,7 +96,7 @@ const AdminDashboard = () => {
 							sx={{ height: "100%" }}
 							value={data?.totalApprovedClaims}
 							icon={approvedClaims}
-							title="Total Approved Items"
+							title="Claimed Approved Items"
 							iconColor="#FFDAB9"
 						/>
 					</Grid>

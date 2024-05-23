@@ -11,10 +11,10 @@ const AuthLinks = () => {
 					<Link href="/my-profile">
 						<Typography
 							sx={{
-								color: "primary.main",
+								color: "text.secondary",
 								fontWeight: "bold",
 								"&:hover": {
-									color: "#739bff",
+									color: "#67cfc0",
 									transition: "all 0.5s ease",
 								},
 							}}
@@ -29,10 +29,10 @@ const AuthLinks = () => {
 				<Link href={`/dashboard/${userInfo?.role}`}>
 					<Typography
 						sx={{
-							color: "primary.main",
+							color: "text.secondary",
 							fontWeight: "bold",
 							"&:hover": {
-								color: "#739bff",
+								color: "#67cfc0",
 								transition: "all 0.5s ease",
 							},
 						}}

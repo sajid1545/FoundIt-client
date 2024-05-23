@@ -1,7 +1,7 @@
-import aboutUsImage from "@/assets/about-us.jpg";
 import founder1 from "@/assets/founder-1.jpg";
 import founder2 from "@/assets/founder-2.jpg";
 import founder3 from "@/assets/founder-3.jpg";
+import aboutUs2 from "@/assets/svgs/about3.svg";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 
@@ -63,15 +63,15 @@ const AboutUsPage = () => {
 				</Box>
 				<Box
 					sx={{
-						width: { xs: "100%", md: "50%" },
+						width: { xs: "100%", md: "50%", display: "flex", justifyContent: "center" },
 					}}>
-					<Image src={aboutUsImage} alt="about-us" />
+					<Image src={aboutUs2} alt="about-us" />
 				</Box>
 			</Stack>
 
 			<Typography
 				align="center"
-				variant="h3"
+				variant="h4"
 				sx={{ color: "text.secondary", m: 3, fontWeight: "bold" }}>
 				Founder Team
 			</Typography>
@@ -82,18 +82,17 @@ const AboutUsPage = () => {
 						<Box
 							key={index}
 							sx={{
-								border: "1px solid #C8EDFD",
-								borderRadius: "3px",
+								borderRadius: "12px",
 								p: 8,
 								m: 2,
 								display: "flex",
 								flexDirection: "column",
 								alignItems: "center",
 								gap: 2,
+								boxShadow: 1,
 								"&:hover": {
-									border: "1px solid #2AB29F",
+									boxShadow: 15,
 									transition: "all 0.5s ease",
-									boxShadow: "0px 5px 22px lightgray",
 								},
 							}}>
 							<Box sx={{ width: 150, height: 150, mx: "auto" }}>

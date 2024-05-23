@@ -1,13 +1,13 @@
+import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { authKey } from "./constants/auth";
 
-type Role = keyof typeof roleBasedPrivateRoutes;
-
 const AuthRoutes = ["/login", "/register"];
 const protectedRoutes = [
 	"/dashboard",
+	"/dashboard/:page*",
 	"/submit-found-items",
 	"/submit-lost-items",
 	"/submit-claim-items",
@@ -41,6 +41,21 @@ export function middleware(request: NextRequest) {
 	}
 
 	if (accessToken && protectedRoutes.includes(pathname)) {
+		return NextResponse.next();
+	}
+	let decodedData = null;
+
+	if (accessToken) {
+		decodedData = jwtDecode(accessToken) as any;
+	}
+
+	const role = decodedData?.role;
+	console.log(
+		"🚀 ~ middleware ~ role: ===========================================================",
+		role
+	);
+
+	if (role === "ADMIN" && pathname.startsWith("/dashboard/admin")) {
 		return NextResponse.next();
 	}
 

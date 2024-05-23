@@ -1,3 +1,4 @@
+import { IMeta } from "@/types";
 import { tagTypes } from "../tag-types";
 import { baseApi } from "./baseApi";
 
@@ -15,10 +16,17 @@ export const foundItemsApi = baseApi.injectEndpoints({
 			invalidatesTags: [tagTypes.foundItems, tagTypes.meta],
 		}),
 		getAllFoundItems: build.query({
-			query: () => ({
+			query: (arg: Record<string, any>) => ({
 				method: "GET",
 				url: "/found-items",
+				params: arg,
 			}),
+			transformResponse: (response: [], meta: IMeta) => {
+				return {
+					foundItems: response,
+					meta,
+				};
+			},
 			providesTags: [tagTypes.foundItems],
 		}),
 

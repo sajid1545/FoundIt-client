@@ -10,11 +10,9 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import dynamic from "next/dynamic";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import logo from "../../../assets/found-logo.jpeg";
 
 function NavBar() {
 	const AuthButton = dynamic(() => import("@/components/UI/AuthButton/AuthButton"), { ssr: false });
@@ -63,14 +61,21 @@ function NavBar() {
 						sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 5 }}>
 						{/* LARGE DISPLAY LOGO */}
 						<Box sx={{ mr: 2, mx: 4, display: { xs: "none", md: "flex" } }}>
-							<Link href={"/"}>
-								<Image
-									src={logo}
-									alt="logo"
-									width={60}
-									height={60}
-									style={{ borderRadius: "50%" }}
-								/>
+							<Link href="/">
+								<Typography
+									variant="h5"
+									noWrap
+									sx={{
+										mr: 2,
+										display: { xs: "none", md: "flex" },
+										fontFamily: "monospace",
+										fontWeight: 900,
+										letterSpacing: ".3rem",
+										color: "text.secondary",
+										textDecoration: "none",
+									}}>
+									FoundIt
+								</Typography>
 							</Link>
 						</Box>
 
@@ -78,10 +83,10 @@ function NavBar() {
 							<Link href="/">
 								<Typography
 									sx={{
-										color: "primary.main",
+										color: "text.secondary",
 										fontWeight: "bold",
 										"&:hover": {
-											color: "#739bff",
+											color: "#67cfc0",
 											transition: "all 0.5s ease",
 										},
 									}}
@@ -92,10 +97,10 @@ function NavBar() {
 							<Link href="/about">
 								<Typography
 									sx={{
-										color: "primary.main",
+										color: "text.secondary",
 										fontWeight: "bold",
 										"&:hover": {
-											color: "#739bff",
+											color: "#67cfc0",
 											transition: "all 0.5s ease",
 										},
 									}}
@@ -106,10 +111,10 @@ function NavBar() {
 							<Link href="/found-items">
 								<Typography
 									sx={{
-										color: "primary.main",
+										color: "text.secondary",
 										fontWeight: "bold",
 										"&:hover": {
-											color: "#739bff",
+											color: "#67cfc0",
 											transition: "all 0.5s ease",
 										},
 									}}

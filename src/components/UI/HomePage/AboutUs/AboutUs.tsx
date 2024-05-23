@@ -1,4 +1,4 @@
-import aboutUsImage from "@/assets/about-us.jpg";
+import aboutUs1 from "@/assets/svgs/aboutUs1.svg";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 
@@ -31,7 +31,7 @@ const AboutUs = () => {
 					sx={{
 						width: { xs: "100%", md: "50%" },
 					}}>
-					<Image src={aboutUsImage} alt="about-us" />
+					<Image src={aboutUs1} alt="about-us" />
 				</Box>
 			</Stack>
 		</Container>
