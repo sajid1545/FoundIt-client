@@ -80,6 +80,12 @@ const LostItems = () => {
 				</Stack>
 			</Stack>
 
+			{lostItems?.length === 0 && (
+				<Typography align="center" sx={{ m: 3 }} variant="h6">
+					No Items Found
+				</Typography>
+			)}
+
 			{isLoading ? (
 				<Typography align="center" sx={{ m: 3 }} variant="h6">
 					Loading...
