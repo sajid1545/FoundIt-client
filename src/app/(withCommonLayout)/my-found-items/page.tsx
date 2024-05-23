@@ -5,7 +5,6 @@ import { dateFormatter } from "@/utils/dateFormatter";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 import { useState } from "react";
-import EditFoundItemsModal from "./components/EditFoundItemsModal";
 import ItemDeleteConfirmation from "./components/ItemDeleteConfirmation";
 
 const MyFoundItemsPage = () => {
@@ -29,7 +28,6 @@ const MyFoundItemsPage = () => {
 
 	return (
 		<Container sx={{ my: 10 }} maxWidth="xl">
-			<EditFoundItemsModal open={isModalOpen} setOpen={setIsModalOpen} id={id} />
 			<ItemDeleteConfirmation open={openAlert} setOpen={setOpenAlert} id={idToDelete} />
 
 			<Typography
@@ -45,7 +43,7 @@ const MyFoundItemsPage = () => {
 				</Typography>
 			) : (
 				<>
-					<Stack direction={{ xs: "column", md: "row" }} gap={4} mt={5}>
+					<Stack direction={{ xs: "column" }} gap={4} mt={5}>
 						{data?.map((item: any) => (
 							<Box
 								key={item.id}
@@ -126,20 +124,38 @@ const MyFoundItemsPage = () => {
 											sx={{
 												display: "flex",
 												alignItems: "center",
-
-												gap: 5,
+												justifyContent: "center",
+												gap: 3,
+												flexWrap: "wrap",
 											}}>
-											<Button
-												size="small"
-												sx={{ display: "block", mx: "auto" }}
-												onClick={() => handleOpenModal(item?.id)}>
-												Edit
-											</Button>
+											<Link href={`/my-found-items/edit-item/${item?.id}`}>
+												<Button
+													size="small"
+													sx={{
+														mt: 0.5,
+														fontSize: "12px",
+														backgroundColor: "primary.main",
+														color: "white",
+														px: 2.5,
+														py: 0.8,
+														borderRadius: "5px",
+													}}>
+													Edit
+												</Button>
+											</Link>
 											<Button
 												onClick={() => handleOpenDeleteConfirmation(item?.id)}
 												color="error"
 												size="small"
-												sx={{ display: "block", mx: "auto" }}>
+												sx={{
+													mt: 0.5,
+													fontSize: "12px",
+													backgroundColor: "red",
+													color: "white",
+													px: 2.5,
+													py: 0.8,
+													borderRadius: "5px",
+												}}>
 												Delete
 											</Button>
 										</Box>

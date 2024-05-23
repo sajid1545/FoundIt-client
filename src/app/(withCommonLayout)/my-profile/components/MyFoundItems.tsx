@@ -4,7 +4,6 @@ import { Box, Button, Container, Stack, Typography, styled } from "@mui/material
 import Select from "@mui/material/Select";
 import Link from "next/link";
 import { useState } from "react";
-import EditFoundItemsModal from "../../my-found-items/components/EditFoundItemsModal";
 import ItemDeleteConfirmation from "../../my-found-items/components/ItemDeleteConfirmation";
 
 export const CustomBorderSelectField = styled(Select)`
@@ -21,14 +20,6 @@ export const CustomBorderSelectField = styled(Select)`
 const MyFoundItems = () => {
 	const { data, isLoading } = useGetMyFoundItemsQuery({});
 
-	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-	const [id, setId] = useState<string>("");
-
-	const handleOpenModal = (id: string) => {
-		setId(id);
-		setIsModalOpen(true);
-	};
-
 	const [openAlert, setOpenAlert] = useState(false);
 	const [idToDelete, setIdToDelete] = useState<string>("");
 
@@ -39,7 +30,6 @@ const MyFoundItems = () => {
 
 	return (
 		<Container sx={{ my: 10 }} maxWidth="xl">
-			<EditFoundItemsModal open={isModalOpen} setOpen={setIsModalOpen} id={id} />
 			<ItemDeleteConfirmation open={openAlert} setOpen={setOpenAlert} id={idToDelete} />
 
 			<Typography
@@ -129,18 +119,43 @@ const MyFoundItems = () => {
 										<Typography color={"text.secondary"} variant="caption">
 											Action
 										</Typography>
-										<Box sx={{ display: "flex", alignItems: "center", gap: 5 }}>
-											<Button
-												size="small"
-												sx={{ display: "block", mx: "auto" }}
-												onClick={() => handleOpenModal(item?.id)}>
-												Edit
-											</Button>
+
+										<Box
+											sx={{
+												display: "flex",
+												alignItems: "center",
+												justifyContent: "center",
+												gap: 3,
+												flexWrap: "wrap",
+											}}>
+											<Link href={`/my-found-items/edit-item/${item?.id}`}>
+												<Button
+													size="small"
+													sx={{
+														mt: 0.5,
+														fontSize: "12px",
+														backgroundColor: "primary.main",
+														color: "white",
+														px: 2.5,
+														py: 0.8,
+														borderRadius: "5px",
+													}}>
+													Edit
+												</Button>
+											</Link>
 											<Button
 												onClick={() => handleOpenDeleteConfirmation(item?.id)}
 												color="error"
 												size="small"
-												sx={{ display: "block", mx: "auto" }}>
+												sx={{
+													mt: 0.5,
+													fontSize: "12px",
+													backgroundColor: "red",
+													color: "white",
+													px: 2.5,
+													py: 0.8,
+													borderRadius: "5px",
+												}}>
 												Delete
 											</Button>
 										</Box>

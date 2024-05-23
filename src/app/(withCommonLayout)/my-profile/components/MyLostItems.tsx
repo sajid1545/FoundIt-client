@@ -178,19 +178,40 @@ const MyLostItems = () => {
 												sx={{
 													display: "flex",
 													alignItems: "center",
-													gap: 5,
+													justifyContent: "center",
+													gap: 3,
+													flexWrap: "wrap",
 												}}>
-												<Button
-													size="small"
-													sx={{ display: "block", mx: "auto" }}
-													onClick={() => handleOpenModal(item?.id)}>
-													Edit
-												</Button>
+												<Link href={`/my-lost-items/edit/${item?.id}`}>
+													<Button
+														size="small"
+														sx={{
+															mt: 0.5,
+															fontSize: "12px",
+															backgroundColor: "primary.main",
+															color: "white",
+															px: 2.5,
+															py: 0.8,
+															borderRadius: "5px",
+														}}
+														// onClick={() => handleOpenModal(item?.id)}
+													>
+														Edit
+													</Button>
+												</Link>
 												<Button
 													onClick={() => handleOpenDeleteConfirmation(item?.id)}
 													color="error"
 													size="small"
-													sx={{ display: "block", mx: "auto" }}>
+													sx={{
+														mt: 0.5,
+														fontSize: "12px",
+														backgroundColor: "red",
+														color: "white",
+														px: 2.5,
+														py: 0.8,
+														borderRadius: "5px",
+													}}>
 													Delete
 												</Button>
 											</Box>

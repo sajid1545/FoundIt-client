@@ -13,9 +13,11 @@ const protectedRoutes = [
 	"/submit-claim-items",
 	"/my-profile",
 	"/my-lost-items",
+	"/my-lost-items/edit",
 	"/my-claim-requests",
 	"/my-found-items",
 	"/my-found-items/edit",
+	"/my-found-items/edit-item",
 ];
 const roleBasedPrivateRoutes = {
 	ADMIN: [/^\/dashboard\/admin/],
@@ -42,22 +44,6 @@ export function middleware(request: NextRequest) {
 		return NextResponse.next();
 	}
 
-	// let decodedData = null;
-
-	// if (accessToken) {
-	// 	decodedData = decodeToken(accessToken);
-	// }
-
-	// const role = decodedData?.role;
-
-	// if (role && roleBasedPrivateRoutes[role as Role]) {
-	// 	const routes = roleBasedPrivateRoutes[role as Role]; // [ /^\/dashboard\/doctor/ ]
-
-	// 	if (routes.some((route) => pathname.match(route))) {
-	// 		return NextResponse.next();
-	// 	}
-	// }
-
 	return NextResponse.redirect(new URL("/", request.url));
 }
 
@@ -72,8 +58,10 @@ export const config = {
 		"/submit-claim-items",
 		"/my-profile",
 		"/my-lost-items",
+		"/my-lost-items/edit",
 		"/my-claim-requests",
 		"/my-found-items",
 		"/my-found-items/edit",
+		"/my-found-items/edit-item",
 	],
 };

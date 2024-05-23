@@ -6,8 +6,8 @@ import {
 } from "@/redux/api/lostItemsApi";
 import { dateFormatter } from "@/utils/dateFormatter";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import Link from "next/link";
 import { useState } from "react";
-import EditLostItemModal from "./components/EditLostItemModal";
 import LostItemDeleteConfirmation from "./components/LostItemDeleteConfirmation";
 
 interface LoadingItems {
@@ -20,14 +20,6 @@ const MyLostItemsPage = () => {
 	const { data, isLoading } = useGetMyLostItemsQuery({});
 
 	const [changeItemStatus] = useUpdateLostItemFoundStatusMutation();
-
-	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-	const [id, setId] = useState<any>(null);
-
-	const handleOpenModal = (id: string) => {
-		setId(id);
-		setIsModalOpen(true);
-	};
 
 	// delete confirmation alert
 	const [openAlert, setOpenAlert] = useState(false);
@@ -52,7 +44,6 @@ const MyLostItemsPage = () => {
 	return (
 		<Container sx={{ my: 15 }} maxWidth="xl">
 			<LostItemDeleteConfirmation open={openAlert} setOpen={setOpenAlert} id={idToDelete} />
-			<EditLostItemModal open={isModalOpen} setOpen={setIsModalOpen} id={id} />
 			<Typography
 				align="center"
 				variant="h4"
@@ -138,6 +129,7 @@ const MyLostItemsPage = () => {
 											onClick={() => handleChangeItemFoundStatus(item?.id)}
 											sx={{
 												mt: 0.5,
+												fontSize: "12px",
 												backgroundColor: "primary.main",
 												color: "white",
 												px: 1,
@@ -163,21 +155,47 @@ const MyLostItemsPage = () => {
 											minWidth: "300px",
 											textAlign: "center",
 										}}>
-										<Typography color={"text.secondary"} sx={{ mb: 1 }} variant="caption">
+										<Typography color={"text.secondary"} variant="caption">
 											Action
 										</Typography>
-										<Box sx={{ display: "flex", alignItems: "center" }}>
-											<Button
-												size="small"
-												sx={{ display: "block", mx: "auto" }}
-												onClick={() => handleOpenModal(item?.id)}>
-												Edit
-											</Button>
+										<Box
+											sx={{
+												display: "flex",
+												alignItems: "center",
+												justifyContent: "center",
+												gap: 3,
+												flexWrap: "wrap",
+											}}>
+											<Link href={`/my-lost-items/edit/${item?.id}`}>
+												<Button
+													size="small"
+													sx={{
+														mt: 0.5,
+														fontSize: "12px",
+														backgroundColor: "primary.main",
+														color: "white",
+														px: 2.5,
+														py: 0.8,
+														borderRadius: "5px",
+													}}
+													// onClick={() => handleOpenModal(item?.id)}
+												>
+													Edit
+												</Button>
+											</Link>
 											<Button
 												onClick={() => handleOpenDeleteConfirmation(item?.id)}
 												color="error"
 												size="small"
-												sx={{ display: "block", mx: "auto" }}>
+												sx={{
+													mt: 0.5,
+													fontSize: "12px",
+													backgroundColor: "red",
+													color: "white",
+													px: 2.5,
+													py: 0.8,
+													borderRadius: "5px",
+												}}>
 												Delete
 											</Button>
 										</Box>
