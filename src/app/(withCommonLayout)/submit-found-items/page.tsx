@@ -110,7 +110,7 @@ const SubmitFoundItemsPage = () => {
 						</Grid>
 
 						<Grid item xs={12} md={6}>
-							<FoundItDatePicker label="Found Date" name="foundDate" />
+							<FoundItDatePicker label="Found Date" name="foundDate" required />
 						</Grid>
 					</Grid>
 
