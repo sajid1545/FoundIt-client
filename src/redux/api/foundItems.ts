@@ -49,6 +49,14 @@ export const foundItemsApi = baseApi.injectEndpoints({
 			}),
 			invalidatesTags: [tagTypes.foundItems, tagTypes.meta],
 		}),
+
+		deleteFoundItem: build.mutation({
+			query: (id) => ({
+				method: "DELETE",
+				url: `/found-items/${id}`,
+			}),
+			invalidatesTags: [tagTypes.foundItems, tagTypes.meta],
+		}),
 	}),
 });
 
@@ -58,4 +66,5 @@ export const {
 	useGetMyFoundItemsQuery,
 	useGetSingleFoundItemQuery,
 	useUpdateFoundItemMutation,
+	useDeleteFoundItemMutation,
 } = foundItemsApi;

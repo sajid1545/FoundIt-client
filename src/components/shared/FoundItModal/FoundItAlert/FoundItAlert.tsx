@@ -1,12 +1,14 @@
-import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import * as React from "react";
 type TProps = {
 	open: boolean;
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	children?: React.ReactNode;
 	title: string;
-	handleConfirm?: () => void;
-	handleCancel: () => void;
+	handleConfirm?: any;
+	handleCancel?: any;
+	text?: string;
+	loading?: boolean;
 };
 
 export default function FoundItAlert({
@@ -16,6 +18,8 @@ export default function FoundItAlert({
 	title,
 	handleConfirm,
 	handleCancel,
+	text,
+	loading,
 }: TProps) {
 	return (
 		<React.Fragment>
@@ -26,10 +30,17 @@ export default function FoundItAlert({
 				aria-describedby="alert-dialog-description">
 				<DialogTitle id="alert-dialog-title">{title}</DialogTitle>
 
+				<DialogContent>{children}</DialogContent>
+
 				<DialogActions>
-					<Button onClick={handleCancel} autoFocus color="error">
-						Cancel
+					<Button onClick={handleCancel} autoFocus color="primary">
+						{"Cancel"}
 					</Button>
+					{handleConfirm && (
+						<Button onClick={handleConfirm} autoFocus color="error">
+							{loading ? "Loading..." : "Ok"}
+						</Button>
+					)}
 				</DialogActions>
 			</Dialog>
 		</React.Fragment>

@@ -31,6 +31,14 @@ export const claimItemsApi = baseApi.injectEndpoints({
 			}),
 			invalidatesTags: [tagTypes.foundItems, tagTypes.claimItems, tagTypes.meta],
 		}),
+
+		getSingleClaim: build.query({
+			query: (id) => ({
+				method: "GET",
+				url: `/claims/${id}`,
+			}),
+			providesTags: [tagTypes.claimItems],
+		}),
 	}),
 });
 
@@ -38,4 +46,5 @@ export const {
 	useCreateClaimItemMutation,
 	useGetMyClaimedRequestsQuery,
 	useUpdateFoundItemClaimStatusMutation,
+	useGetSingleClaimQuery,
 } = claimItemsApi;

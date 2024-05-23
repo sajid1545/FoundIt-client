@@ -3,9 +3,10 @@
 import { useGetMyFoundItemsQuery } from "@/redux/api/foundItems";
 import { dateFormatter } from "@/utils/dateFormatter";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import Link from "next/link";
 import { useState } from "react";
 import EditFoundItemsModal from "./components/EditFoundItemsModal";
-import UpdateStatusModal from "./components/UpdateStatusModal";
+import ItemDeleteConfirmation from "./components/ItemDeleteConfirmation";
 
 const MyFoundItemsPage = () => {
 	const { data, isLoading } = useGetMyFoundItemsQuery({});
@@ -18,19 +19,19 @@ const MyFoundItemsPage = () => {
 		setIsModalOpen(true);
 	};
 
-	// For opening the update status modal
-	const [isModalOpen2, setIsModalOpen2] = useState<boolean>(false);
-	const [id2, setId2] = useState<string>("");
+	const [openAlert, setOpenAlert] = useState(false);
+	const [idToDelete, setIdToDelete] = useState<string>("");
 
-	const handleOpenModal2 = (id: string) => {
-		setId2(id);
-		setIsModalOpen2(true);
+	const handleOpenDeleteConfirmation = (id: string) => {
+		setOpenAlert(true);
+		setIdToDelete(id);
 	};
 
 	return (
 		<Container sx={{ my: 10 }} maxWidth="xl">
 			<EditFoundItemsModal open={isModalOpen} setOpen={setIsModalOpen} id={id} />
-			<UpdateStatusModal open={isModalOpen2} setOpen={setIsModalOpen2} id={id2} />
+			<ItemDeleteConfirmation open={openAlert} setOpen={setOpenAlert} id={idToDelete} />
+
 			<Typography
 				align="center"
 				variant="h4"
@@ -128,99 +129,51 @@ const MyFoundItemsPage = () => {
 												onClick={() => handleOpenModal(item?.id)}>
 												Edit
 											</Button>
+											<Button
+												onClick={() => handleOpenDeleteConfirmation(item?.id)}
+												color="error"
+												size="small"
+												sx={{ display: "block", mx: "auto" }}>
+												Delete
+											</Button>
 										</Box>
 									</Box>
 								</Stack>
 
-								<Typography sx={{ fontWeight: "bold", fontSize: "18px", my: 3 }}>Claim</Typography>
 								<Stack
 									direction={{ xs: "column", md: "row" }}
 									gap={2}
 									flexWrap={"wrap"}
 									justifyContent={"center"}>
 									{item?.claim?.length === 0 && (
-										<Typography sx={{ fontWeight: "bold", fontSize: "18px" }}>
-											No Claim For This Item
+										<Typography sx={{ fontWeight: "bold", fontSize: "20px", mt: 5 }}>
+											No Claim For{" "}
+											<Box component={"span"} sx={{ color: "#2AB29F" }}>
+												{item?.foundItemName}
+											</Box>
 										</Typography>
 									)}
-									{item?.claim?.map((item: any) => {
-										return (
+
+									{item?.claim.length > 0 && (
+										<Link href={`/my-found-items/edit/${item?.id}`}>
 											<Box
-												key={item?.id}
 												sx={{
-													display: "flex",
-													flexDirection: { xs: "column", md: "row" },
-													flexWrap: "wrap",
-													justifyContent: "center",
-													alignItems: "center",
-													gap: 2,
-													backgroundColor: "#C8EDFD)",
-													border: "1px solid #C8EDFD",
-													borderRadius: "10px",
-													textAlign: "center",
-													padding: "40px 10px",
+													display: "block",
+													mx: "auto",
+													mt: 3,
+													fontWeight: "bold",
+													fontSize: "18px",
+													backgroundColor: "#2AB29F",
+													color: "white",
+													width: "100%",
+													padding: "8px 10px",
+													borderRadius: "3px",
+													cursor: "pointer",
 												}}>
-												<Box
-													sx={{
-														p: 2,
-														px: 4,
-														border: "1px solid #C8EDFD",
-														background: "#f4f7fe",
-														width: "300px",
-														textAlign: "center",
-													}}>
-													<Typography color={"text.secondary"} variant="caption">
-														Name
-													</Typography>
-													<Typography>{item?.user?.name}</Typography>
-												</Box>
-												<Box
-													sx={{
-														p: 2,
-														px: 4,
-														border: "1px solid #C8EDFD",
-														background: "#f4f7fe",
-														width: "300px",
-														textAlign: "center",
-													}}>
-													<Typography color={"text.secondary"} variant="caption">
-														Status
-													</Typography>
-													<Typography>
-														{item?.status === "REJECTED" ? (
-															<Typography fontWeight={600} color="red">
-																{item?.status}
-															</Typography>
-														) : item?.status === "APPROVED" ? (
-															<Typography fontWeight={600} color="green">
-																{item?.status}
-															</Typography>
-														) : (
-															<Typography>{item?.status}</Typography>
-														)}
-													</Typography>
-												</Box>
-												<Box
-													sx={{
-														p: 2,
-														px: 4,
-														border: "1px solid #C8EDFD",
-														background: "#f4f7fe",
-														width: "300px",
-														textAlign: "center",
-													}}>
-													<Typography color={"text.secondary"} variant="caption">
-														Update Status
-													</Typography>
-													<Typography>
-														<Button onClick={() => handleOpenModal2(item?.id)}>
-															Update Status
-														</Button>
-													</Typography>
-												</Box>
+												View all {item?.foundItemName} Claims
 											</Box>
-										);
-									})}
+										</Link>
+									)}
 								</Stack>
 							</Box>
 						))}
