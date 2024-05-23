@@ -12,7 +12,7 @@ export const foundItemsApi = baseApi.injectEndpoints({
 					"Content-Type": "application/json",
 				},
 			}),
-			invalidatesTags: [tagTypes.foundItems],
+			invalidatesTags: [tagTypes.foundItems, tagTypes.meta],
 		}),
 		getAllFoundItems: build.query({
 			query: () => ({
@@ -47,7 +47,7 @@ export const foundItemsApi = baseApi.injectEndpoints({
 					"Content-Type": "application/json",
 				},
 			}),
-			invalidatesTags: [tagTypes.foundItems],
+			invalidatesTags: [tagTypes.foundItems, tagTypes.meta],
 		}),
 	}),
 });

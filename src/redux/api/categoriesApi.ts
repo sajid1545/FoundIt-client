@@ -8,7 +8,7 @@ export const categoriesApi = baseApi.injectEndpoints({
 				method: "GET",
 				url: "/found-item-categories",
 			}),
-			providesTags: [tagTypes.categories],
+			providesTags: [tagTypes.categories, tagTypes.meta],
 		}),
 	}),
 });

@@ -9,7 +9,7 @@ export const authApi = baseApi.injectEndpoints({
 				url: "/change-password",
 				data,
 			}),
-			invalidatesTags: [tagTypes.user],
+			invalidatesTags: [tagTypes.user, tagTypes.meta],
 		}),
 	}),
 });

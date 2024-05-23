@@ -12,7 +12,7 @@ export const claimItemsApi = baseApi.injectEndpoints({
 					"Content-Type": "application/json",
 				},
 			}),
-			invalidatesTags: [tagTypes.claimItems],
+			invalidatesTags: [tagTypes.claimItems, tagTypes.meta],
 		}),
 
 		getMyClaimedRequests: build.query({
@@ -29,7 +29,7 @@ export const claimItemsApi = baseApi.injectEndpoints({
 				url: `/claims/${data.id}`,
 				data: data.status,
 			}),
-			invalidatesTags: [tagTypes.foundItems, tagTypes.claimItems],
+			invalidatesTags: [tagTypes.foundItems, tagTypes.claimItems, tagTypes.meta],
 		}),
 	}),
 });

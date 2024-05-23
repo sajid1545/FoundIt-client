@@ -12,7 +12,7 @@ export const lostItemsApi = baseApi.injectEndpoints({
 					"Content-Type": "application/json",
 				},
 			}),
-			invalidatesTags: [tagTypes.lostItems],
+			invalidatesTags: [tagTypes.lostItems, tagTypes.meta],
 		}),
 
 		getMyLostItems: build.query({
@@ -37,7 +37,7 @@ export const lostItemsApi = baseApi.injectEndpoints({
 				url: `/lost-items/${data.id}`,
 				data: data.data,
 			}),
-			invalidatesTags: [tagTypes.lostItems],
+			invalidatesTags: [tagTypes.lostItems, tagTypes.meta],
 		}),
 	}),
 });

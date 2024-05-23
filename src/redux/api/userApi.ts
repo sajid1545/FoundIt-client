@@ -18,7 +18,7 @@ export const userApi = baseApi.injectEndpoints({
 				url: `/user/${data.id}`,
 				data: data.status,
 			}),
-			invalidatesTags: [tagTypes.user],
+			invalidatesTags: [tagTypes.user, tagTypes.meta],
 		}),
 	}),
 });

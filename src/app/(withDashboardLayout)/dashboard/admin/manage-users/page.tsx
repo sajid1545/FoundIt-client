@@ -1,7 +1,7 @@
 "use client";
 
 import { useGetAllUsersQuery } from "@/redux/api/userApi";
-import { Box, Button, Pagination, Typography } from "@mui/material";
+import { Box, Button, Chip, Pagination, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useState } from "react";
 import UpdateUserStatusModal from "./components/UpdateUserStatusModal";
@@ -41,7 +41,24 @@ const ManageUsersPage = () => {
 	const columns: GridColDef[] = [
 		{ field: "name", headerName: "Name", flex: 1 },
 		{ field: "email", headerName: "Email", flex: 1 },
-		{ field: "status", headerName: "Status", flex: 1 },
+		{
+			field: "status",
+			headerName: "Status",
+			flex: 1,
+			renderCell: ({ value }) => (
+				// <Typography
+				// 	sx={{ fontWeight: "bold", mt: 2 }}
+				// 	color={value === "ACTIVE" ? "success.main" : "error.main"}>
+				// 	{value}
+				// </Typography>
+				<Chip
+					variant="outlined"
+					sx={{ fontWeight: "bold" }}
+					label={value}
+					color={value === "ACTIVE" ? "success" : "error"}
+				/>
+			),
+		},
 		{ field: "role", headerName: "Role", flex: 1 },
 
 		{
