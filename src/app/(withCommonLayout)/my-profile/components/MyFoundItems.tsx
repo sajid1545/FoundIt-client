@@ -63,8 +63,8 @@ const MyFoundItems = () => {
 									display: "flex",
 									flex: 1,
 									flexDirection: "column",
-									alignItems: "center",
-									justifyContent: "center",
+									justifyContent: { xs: "center", md: "flex-start" },
+									alignItems: { xs: "center", md: "center" },
 									backgroundColor: "#C8EDFD)",
 									border: "1px solid #C8EDFD",
 									borderRadius: "10px",
@@ -78,7 +78,7 @@ const MyFoundItems = () => {
 										boxShadow: "0px 0px 10px 0px #D3D3D3",
 									},
 								}}>
-								<Typography sx={{ fontWeight: "bold", fontSize: "18px" }}>
+								<Typography sx={{ fontWeight: "bold", fontSize: "18px", textAlign: "center" }}>
 									{item?.foundItemName}
 								</Typography>
 

@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const Footer = () => {
 	return (
-		<Box bgcolor="#EFF2F7" sx={{ color: "#203145" }} py={5}>
+		<Box bgcolor="rgb(17, 26, 34)" sx={{ color: "secondary.light" }} py={5}>
 			<Container>
 				<Stack direction="row" gap={5} justifyContent="center">
 					<Box>
@@ -45,11 +45,11 @@ const Footer = () => {
 
 				<Box
 					sx={{
-						border: "1px dashed black",
+						border: "1px dashed #B0B0B0",
 					}}></Box>
 
 				<Stack direction="row" gap={2} justifyContent="space-between" alignItems="center" py={3}>
-					<Typography component="p" color="text.primary">
+					<Typography component="p" color="white">
 						&copy;2024 FoundIt. All Rights Reserved.
 					</Typography>
 					<Typography variant="h4" component={Link} href="/" fontWeight={600} color="text.primary">
@@ -57,7 +57,7 @@ const Footer = () => {
 							FoundIt
 						</Box>{" "}
 					</Typography>
-					<Typography component="p" color="text.primary">
+					<Typography component="p" color="white">
 						Privacy Policy! Terms & Conditions
 					</Typography>
 				</Stack>
