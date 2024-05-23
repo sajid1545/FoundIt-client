@@ -4,6 +4,7 @@ import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 import { useState } from "react";
 import EditLostItemModal from "../../my-lost-items/components/EditLostItemModal";
+import LostItemDeleteConfirmation from "../../my-lost-items/components/LostItemDeleteConfirmation";
 
 const MyLostItems = () => {
 	const { data, isLoading } = useGetMyLostItemsQuery({});
@@ -16,9 +17,19 @@ const MyLostItems = () => {
 		setIsModalOpen(true);
 	};
 
+	// delete confirmation alert
+	const [openAlert, setOpenAlert] = useState(false);
+	const [idToDelete, setIdToDelete] = useState<string>("");
+
+	const handleOpenDeleteConfirmation = (id: string) => {
+		setOpenAlert(true);
+		setIdToDelete(id);
+	};
+
 	return (
 		<Container sx={{ my: 10 }} maxWidth="xl">
 			<EditLostItemModal open={isModalOpen} setOpen={setIsModalOpen} id={id} />
+			<LostItemDeleteConfirmation open={openAlert} setOpen={setOpenAlert} id={idToDelete} />
 			<Typography
 				align="center"
 				variant="h4"
@@ -105,16 +116,25 @@ const MyLostItems = () => {
 										<Typography color={"text.secondary"} variant="caption">
 											Action
 										</Typography>
-										<Box sx={{ display: "flex", alignItems: "center", gap: 5 }}>
+										<Box
+											sx={{
+												display: "flex",
+												alignItems: "center",
+												gap: 5,
+											}}>
 											<Button
 												size="small"
 												sx={{ display: "block", mx: "auto" }}
 												onClick={() => handleOpenModal(item?.id)}>
 												Edit
 											</Button>
-											{/* <Button size="small" color="error" fullWidth>
+											<Button
+												onClick={() => handleOpenDeleteConfirmation(item?.id)}
+												color="error"
+												size="small"
+												sx={{ display: "block", mx: "auto" }}>
 												Delete
-											</Button> */}
+											</Button>
 										</Box>
 									</Box>
 								</Stack>

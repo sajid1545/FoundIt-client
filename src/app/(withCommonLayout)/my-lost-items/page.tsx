@@ -5,6 +5,7 @@ import { dateFormatter } from "@/utils/dateFormatter";
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import EditLostItemModal from "./components/EditLostItemModal";
+import LostItemDeleteConfirmation from "./components/LostItemDeleteConfirmation";
 
 const MyLostItemsPage = () => {
 	const { data, isLoading } = useGetMyLostItemsQuery({});
@@ -17,8 +18,18 @@ const MyLostItemsPage = () => {
 		setIsModalOpen(true);
 	};
 
+	// delete confirmation alert
+	const [openAlert, setOpenAlert] = useState(false);
+	const [idToDelete, setIdToDelete] = useState<string>("");
+
+	const handleOpenDeleteConfirmation = (id: string) => {
+		setOpenAlert(true);
+		setIdToDelete(id);
+	};
+
 	return (
 		<Container sx={{ my: 15 }} maxWidth="xl">
+			<LostItemDeleteConfirmation open={openAlert} setOpen={setOpenAlert} id={idToDelete} />
 			<EditLostItemModal open={isModalOpen} setOpen={setIsModalOpen} id={id} />
 			<Typography
 				align="center"
@@ -103,9 +114,13 @@ const MyLostItemsPage = () => {
 												onClick={() => handleOpenModal(item?.id)}>
 												Edit
 											</Button>
-											{/* <Button size="small" color="error" fullWidth>
+											<Button
+												onClick={() => handleOpenDeleteConfirmation(item?.id)}
+												color="error"
+												size="small"
+												sx={{ display: "block", mx: "auto" }}>
 												Delete
-											</Button> */}
+											</Button>
 										</Box>
 									</Box>
 								</Stack>

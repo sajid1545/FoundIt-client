@@ -122,7 +122,13 @@ const MyFoundItemsPage = () => {
 										<Typography color={"text.secondary"} variant="caption">
 											Action
 										</Typography>
-										<Box sx={{ display: "flex", alignItems: "center", gap: 5 }}>
+										<Box
+											sx={{
+												display: "flex",
+												alignItems: "center",
+
+												gap: 5,
+											}}>
 											<Button
 												size="small"
 												sx={{ display: "block", mx: "auto" }}
