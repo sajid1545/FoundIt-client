@@ -5,6 +5,7 @@ import FoundItForm from "@/components/Forms/FoundItForm";
 import FoundItInput from "@/components/Forms/FoundItInput";
 import { authKey } from "@/constants/auth";
 import { registerUser } from "@/services/actions/registerUser";
+import setAccessToken from "@/services/actions/setAccessToken";
 import { userLogin } from "@/services/actions/userLogin";
 import { setToLocalStorage } from "@/utils/localStorage";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -60,6 +61,7 @@ const RegisterPage = () => {
 					});
 					if (result?.data?.token) {
 						setToLocalStorage(authKey, result?.data?.token);
+						setAccessToken(result?.data?.token);
 						router.push("/");
 						router.refresh();
 					}
