@@ -15,9 +15,21 @@ const MyClaimedRequests = () => {
 			</Typography>
 
 			{isLoading ? (
-				<p>Loading...</p>
+				<Typography align="center" sx={{ m: 3 }} variant="h6">
+					Loading...
+				</Typography>
 			) : (
 				<>
+					{data?.length === 0 && !isLoading && (
+						<Typography
+							sx={{
+								textAlign: "center",
+								mt: 10,
+							}}
+							variant="h5">
+							No Items Found
+						</Typography>
+					)}
 					<Stack direction={{ xs: "column" }} gap={5} mt={5}>
 						{data?.map((item: any) => (
 							<Box

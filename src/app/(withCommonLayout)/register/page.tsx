@@ -3,11 +3,7 @@
 import loginIllustration from "@/assets/icons/register.png";
 import FoundItForm from "@/components/Forms/FoundItForm";
 import FoundItInput from "@/components/Forms/FoundItInput";
-import { authKey } from "@/constants/auth";
 import { registerUser } from "@/services/actions/registerUser";
-import setAccessToken from "@/services/actions/setAccessToken";
-import { userLogin } from "@/services/actions/userLogin";
-import { setToLocalStorage } from "@/utils/localStorage";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import Image from "next/image";
@@ -52,19 +48,8 @@ const RegisterPage = () => {
 				const res = await registerUser(rest);
 				if (res.statusCode === 201) {
 					toast.success("User created successfully");
-
-					router.push("/login");
 					setLoading(false);
-					const result = await userLogin({
-						email: values?.patient?.email,
-						password: values?.password,
-					});
-					if (result?.data?.token) {
-						setToLocalStorage(authKey, result?.data?.token);
-						setAccessToken(result?.data?.token);
-						router.push("/");
-						router.refresh();
-					}
+					router.push("/login");
 				}
 			} catch (error) {
 				console.log(error);

@@ -18,7 +18,7 @@ export const claimItemsApi = baseApi.injectEndpoints({
 		getMyClaimedRequests: build.query({
 			query: () => ({
 				method: "GET",
-				url: "/claims",
+				url: "/claims/my-claims",
 			}),
 			providesTags: [tagTypes.claimItems],
 		}),

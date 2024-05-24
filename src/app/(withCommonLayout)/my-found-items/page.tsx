@@ -43,6 +43,16 @@ const MyFoundItemsPage = () => {
 				</Typography>
 			) : (
 				<>
+					{data?.length === 0 && !isLoading && (
+						<Typography
+							sx={{
+								textAlign: "center",
+								mt: 10,
+							}}
+							variant="h5">
+							No Items Found
+						</Typography>
+					)}
 					<Stack direction={{ xs: "column" }} gap={4} mt={5}>
 						{data?.map((item: any) => (
 							<Box

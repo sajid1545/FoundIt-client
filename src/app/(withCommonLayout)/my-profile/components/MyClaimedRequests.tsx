@@ -20,6 +20,11 @@ const MyClaimedRequests = () => {
 				</Typography>
 			) : (
 				<>
+					{data?.length === 0 && !isLoading && (
+						<Typography sx={{ textAlign: "center" }} variant="h5">
+							No Items Found
+						</Typography>
+					)}
 					<Stack direction={{ xs: "column", md: "row" }} gap={4} mt={5}>
 						{data?.slice(0, 3)?.map((item: any) => (
 							<Box
