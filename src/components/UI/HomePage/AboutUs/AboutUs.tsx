@@ -13,11 +13,11 @@ const AboutUs = () => {
 			</Typography>
 
 			<Stack
-				direction={{ xs: "column", md: "row" }}
+				direction={{ xs: "column-reverse", md: "row" }}
 				justifyContent="space-between"
 				alignItems={"center"}>
 				<Box sx={{ width: { xs: "100%", md: "50%" } }}>
-					<Typography variant="h6">
+					<Typography variant="h6" sx={{ textAlign: { xs: "center", md: "left" } }}>
 						Our lost and found system is designed to be a centralized platform where users can
 						easily report lost items, find items that have been lost and even help others by
 						reporting found items. Our system can categorize and filter out reported items, making
@@ -30,6 +30,7 @@ const AboutUs = () => {
 				<Box
 					sx={{
 						width: { xs: "100%", md: "50%" },
+						mb: { xs: 3, md: 0 },
 					}}>
 					<Image src={aboutUs1} alt="about-us" />
 				</Box>

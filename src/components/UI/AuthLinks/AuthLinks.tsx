@@ -12,18 +12,20 @@ const AuthLinks = () => {
 		<>
 			{userInfo?.id && (
 				<>
-					<Typography
-						sx={{
-							color: "text.secondary",
-							fontWeight: "bold",
-							"&:hover": {
-								color: "#67cfc0",
-								transition: "all 0.5s ease",
-							},
-						}}
-						textAlign="center">
-						<Link href="/my-profile">My profile</Link>
-					</Typography>
+					<Link href="/my-profile">
+						<Typography
+							sx={{
+								color: "text.secondary",
+								fontWeight: "bold",
+								"&:hover": {
+									color: "#67cfc0",
+									transition: "all 0.5s ease",
+								},
+							}}
+							textAlign="center">
+							My Profile
+						</Typography>
+					</Link>
 				</>
 			)}
 

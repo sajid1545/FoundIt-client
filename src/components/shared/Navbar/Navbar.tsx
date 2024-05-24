@@ -154,7 +154,7 @@ function NavBar() {
 									display: { xs: "block", md: "none" },
 								}}>
 								<MenuItem onClick={handleCloseNavMenu}>
-									<Link href="/home">
+									<Link href="/">
 										<Typography textAlign="center">Home</Typography>
 									</Link>
 								</MenuItem>

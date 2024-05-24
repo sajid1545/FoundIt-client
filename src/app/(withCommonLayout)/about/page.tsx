@@ -37,7 +37,7 @@ const AboutUsPage = () => {
 			</Typography>
 
 			<Stack
-				direction={{ xs: "column", md: "row" }}
+				direction={{ xs: "column-reverse", md: "row" }}
 				justifyContent="space-between"
 				alignItems={"center"}>
 				<Box sx={{ width: { xs: "100%", md: "50%" } }}>

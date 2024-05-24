@@ -11,19 +11,19 @@ const AuthMenuItems = ({ handleCloseNavMenu }: any) => {
 	return (
 		<>
 			{userInfo?.id && (
-				<MenuItem onClick={handleCloseNavMenu}>
-					<Link href="/my-profile">
+				<Link href="/my-profile">
+					<MenuItem onClick={handleCloseNavMenu}>
 						<Typography textAlign="center">My Profile</Typography>
-					</Link>
-				</MenuItem>
+					</MenuItem>
+				</Link>
 			)}
 
 			{userInfo?.role === "admin" && (
-				<MenuItem onClick={handleCloseNavMenu}>
-					<Link href={`/dashboard/${userInfo?.role}`}>
+				<Link href={`/dashboard/${userInfo?.role}`}>
+					<MenuItem onClick={handleCloseNavMenu}>
 						<Typography textAlign="center">Dashboard</Typography>
-					</Link>
-				</MenuItem>
+					</MenuItem>
+				</Link>
 			)}
 		</>
 	);

@@ -26,6 +26,7 @@ const HeroSection = () => {
 					justifyContent: "center",
 					alignItems: "center",
 					zIndex: 1,
+					textAlign: { xs: "center", md: "left" },
 				}}>
 				<Typography variant="h3" sx={{ color: "secondary.main", m: 3, fontWeight: "bold" }}>
 					The new standard for lost and found
@@ -44,7 +45,7 @@ const HeroSection = () => {
 						Ultimate user experience
 					</Typography>
 				</Box>
-				<Box sx={{ display: "flex", gap: 4 }}>
+				<Box sx={{ display: "flex", direction: { xs: "column", md: "row" }, gap: 4 }}>
 					<Link href="/submit-lost-items">
 						<Button
 							sx={{
