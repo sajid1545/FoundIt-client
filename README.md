@@ -18,7 +18,8 @@ Our lost and found system is designed to be a centralized platform where users c
 - In the "My Profile" page user can edit and delete their lost and found items
 - Users can view there claim requests
 - User can also view claim request on his founded item and approve or reject it.
-- Use can change item found status of their lost items. True if lost items is found and false if lost items is not found.
+- User can change item found status of their lost items. True if lost items is found and false if lost items is not found.
+- Currently there is no dashboard for USER.
 - There is a password confirmation alert that will be displayed if password and confirm password do not match.
 - Before deleting users created lost and found item a alert will be displayed, which will ask for confirmation.
 - Admin can manage users, users can Activate and deactivate users.
