@@ -52,7 +52,7 @@ First, run the development server:
 ## 1. Clone the repository
 
 ```bash
-git clone https://github.com/Porgramming-Hero-web-course/l2-b2-fullstack-track-assignment-8-sajid1545.git
+git clone https://github.com/sajid1545/FoundIt-client.git
 ```
 
 ### Go to the project directory
