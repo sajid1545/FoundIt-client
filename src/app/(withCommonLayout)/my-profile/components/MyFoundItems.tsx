@@ -18,7 +18,12 @@ export const CustomBorderSelectField = styled(Select)`
 `;
 
 const MyFoundItems = () => {
-	const { data, isLoading } = useGetMyFoundItemsQuery({});
+	const { data, isLoading } = useGetMyFoundItemsQuery(
+		{},
+		{
+			refetchOnMountOrArgChange: true,
+		}
+	);
 
 	const [openAlert, setOpenAlert] = useState(false);
 	const [idToDelete, setIdToDelete] = useState<string>("");

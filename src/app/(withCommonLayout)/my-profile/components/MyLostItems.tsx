@@ -16,7 +16,12 @@ interface LoadingItems {
 const MyLostItems = () => {
 	const [loadingItems, setLoadingItems] = useState<LoadingItems>({});
 
-	const { data, isLoading } = useGetMyLostItemsQuery({});
+	const { data, isLoading } = useGetMyLostItemsQuery(
+		{},
+		{
+			refetchOnMountOrArgChange: true,
+		}
+	);
 
 	const [changeItemStatus, { isLoading: isUpdating }] = useUpdateLostItemFoundStatusMutation();
 

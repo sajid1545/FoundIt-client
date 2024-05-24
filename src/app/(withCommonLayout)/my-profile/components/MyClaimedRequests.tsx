@@ -3,7 +3,12 @@ import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import Link from "next/link";
 
 const MyClaimedRequests = () => {
-	const { data, isLoading } = useGetMyClaimedRequestsQuery({});
+	const { data, isLoading } = useGetMyClaimedRequestsQuery(
+		{},
+		{
+			refetchOnMountOrArgChange: true,
+		}
+	);
 
 	return (
 		<Container sx={{ my: 10 }} maxWidth="xl">

@@ -15,7 +15,12 @@ import MyLostItems from "./components/MyLostItems";
 const MyProfile = () => {
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-	const { data: myProfile, isLoading: profileLoading, refetch } = useGetMyProfileQuery({});
+	const { data: myProfile, isLoading: profileLoading } = useGetMyProfileQuery(
+		{},
+		{
+			refetchOnMountOrArgChange: true,
+		}
+	);
 
 	return (
 		<Container sx={{ my: 15 }} maxWidth="xl">
