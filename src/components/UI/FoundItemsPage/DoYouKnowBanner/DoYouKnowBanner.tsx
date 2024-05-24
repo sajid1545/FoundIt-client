@@ -13,9 +13,14 @@ const DoYouKnowBanner = () => {
 				width: { xs: "100%", md: "70%" },
 				margin: "auto",
 			}}>
-			<Box sx={{ display: "flex", gap: 5, alignItems: "self-start" }}>
-				<Image src={knowIcon} alt="knowIcon" width={180} height={180} />
-				<Box>
+			<Box
+				sx={{
+					display: { xs: "column", md: "flex" },
+					gap: 5,
+				}}>
+				<Image src={knowIcon} alt="knowIcon" width={180} height={180} style={{ margin: "auto" }} />
+
+				<Box sx={{ textAlign: { xs: "center", md: "left" } }}>
 					<Typography
 						sx={{ mt: 3, mb: 2, fontWeight: "bold", color: "#2B4D46", fontSize: "30px" }}
 						variant="h4">
