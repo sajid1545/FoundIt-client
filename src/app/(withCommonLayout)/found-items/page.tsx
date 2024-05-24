@@ -8,7 +8,7 @@ import { useGetAllFoundItemsQuery } from "@/redux/api/foundItems";
 import { useDebounced } from "@/redux/hooks";
 import { dateFormatter } from "@/utils/dateFormatter";
 import { timeFormatter } from "@/utils/timeFormatter";
-import { Box, Button, Container, MenuItem, Stack, Typography } from "@mui/material";
+import { Box, Button, Container, MenuItem, Pagination, Stack, Typography } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -20,6 +20,11 @@ const FoundItemsPage = () => {
 
 	const [searchTerm, setSearchTerm] = useState<string>("");
 	const [category, setCategory] = useState<string>("");
+	const [page, setPage] = useState(1);
+	const [limit, setLimit] = useState(10);
+
+	query["page"] = page;
+	query["limit"] = limit;
 
 	const debouncedTerm = useDebounced({ searchQuery: searchTerm, delay: 600 });
 
@@ -33,7 +38,11 @@ const FoundItemsPage = () => {
 	const { data: categories, isLoading: categoriesLoading } = useGetCategoriesQuery({});
 
 	const foundItems = data?.foundItems || [];
-	const meta = data?.meta || {};
+	const meta = data?.meta || null;
+
+	const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+		setPage(value);
+	};
 
 	return (
 		<Container sx={{ my: 15 }} maxWidth="xl">
@@ -94,48 +103,63 @@ const FoundItemsPage = () => {
 					Loading...
 				</Typography>
 			) : (
-				<Box>
-					<Grid container spacing={3}>
-						{foundItems?.map((item: any) => (
-							<Grid key={item.id} lg={4} sm={6} xs={12}>
-								<Card
-									sx={{
-										borderRadius: "12px",
-										textAlign: "center",
-									}}>
-									<CardContent sx={{ p: 2 }}>
-										<Stack spacing={1}>
-											<Typography color="primary.main" sx={{ fontWeight: "bold" }} variant="h5">
-												{item.foundItemName}
-											</Typography>
-											<Typography variant="subtitle1" fontWeight={600} mt={2}>
-												{item.description}
-											</Typography>
-											<Typography variant="subtitle1" fontWeight={600} mt={2}>
-												{item.location} - {dateFormatter(item.foundDate)}{" "}
-												{timeFormatter(item.foundDate)}
-											</Typography>
+				<>
+					<Box>
+						<Grid container spacing={3}>
+							{foundItems?.map((item: any) => (
+								<Grid key={item.id} lg={4} sm={6} xs={12}>
+									<Card
+										sx={{
+											borderRadius: "12px",
+											textAlign: "center",
+										}}>
+										<CardContent sx={{ p: 2 }}>
+											<Stack spacing={1}>
+												<Typography color="primary.main" sx={{ fontWeight: "bold" }} variant="h5">
+													{item.foundItemName}
+												</Typography>
+												<Typography variant="subtitle1" fontWeight={600} mt={2}>
+													{item.description}
+												</Typography>
+												<Typography variant="subtitle1" fontWeight={600} mt={2}>
+													{item.location} - {dateFormatter(item.foundDate)}{" "}
+													{timeFormatter(item.foundDate)}
+												</Typography>
 
-											<Link href={`/found-items/${item.id}`}>
-												<Button
-													sx={{
-														fontWeight: "bold",
-														mt: "20px",
-														backgroundColor: "text.secondary",
-														"&:hover": {
+												<Link href={`/found-items/${item.id}`}>
+													<Button
+														sx={{
+															fontWeight: "bold",
+															mt: "20px",
 															backgroundColor: "text.secondary",
-														},
-													}}>
-													View Details
-												</Button>
-											</Link>
-										</Stack>
-									</CardContent>
-								</Card>
-							</Grid>
-						))}
-					</Grid>
-				</Box>
+															"&:hover": {
+																backgroundColor: "text.secondary",
+															},
+														}}>
+														View Details
+													</Button>
+												</Link>
+											</Stack>
+										</CardContent>
+									</Card>
+								</Grid>
+							))}
+						</Grid>
+					</Box>
+					<Box
+						sx={{
+							mt: 5,
+							display: "flex",
+							justifyContent: "center",
+						}}>
+						<Pagination
+							color="primary"
+							count={Math.ceil((meta?.total as number) / limit)}
+							page={page}
+							onChange={handleChange}
+						/>
+					</Box>
+				</>
 			)}
 		</Container>
 	);

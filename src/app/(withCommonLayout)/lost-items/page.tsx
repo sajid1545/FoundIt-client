@@ -7,7 +7,7 @@ import { useGetAllLostItemsQuery } from "@/redux/api/lostItemsApi";
 import { useDebounced } from "@/redux/hooks";
 import { dateFormatter } from "@/utils/dateFormatter";
 import { timeFormatter } from "@/utils/timeFormatter";
-import { Box, Button, Container, MenuItem, Stack, Typography } from "@mui/material";
+import { Box, Button, Container, MenuItem, Pagination, Stack, Typography } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -20,6 +20,12 @@ const LostItems = () => {
 	const [searchTerm, setSearchTerm] = useState<string>("");
 	const [category, setCategory] = useState<string>("");
 
+	const [page, setPage] = useState(1);
+	const [limit, setLimit] = useState(10);
+
+	query["page"] = page;
+	query["limit"] = limit;
+
 	const debouncedTerm = useDebounced({ searchQuery: searchTerm, delay: 600 });
 
 	if (!!debouncedTerm) {
@@ -28,11 +34,15 @@ const LostItems = () => {
 
 	query["category"] = category;
 
-	const { data, isLoading, refetch } = useGetAllLostItemsQuery({ ...query });
+	const { data, isLoading } = useGetAllLostItemsQuery({ ...query });
 	const { data: categories, isLoading: categoriesLoading } = useGetCategoriesQuery({});
 
 	const lostItems = data?.lostItems || [];
-	const meta = data?.meta || {};
+	const meta = data?.meta || null;
+
+	const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+		setPage(value);
+	};
 
 	return (
 		<Container sx={{ my: 15 }} maxWidth="xl">
@@ -91,48 +101,63 @@ const LostItems = () => {
 					Loading...
 				</Typography>
 			) : (
-				<Box>
-					<Grid container spacing={3}>
-						{lostItems?.map((item: any) => (
-							<Grid key={item.id} lg={4} sm={6} xs={12}>
-								<Card
-									sx={{
-										borderRadius: "12px",
-										textAlign: "center",
-									}}>
-									<CardContent sx={{ p: 3 }}>
-										<Stack spacing={1}>
-											<Typography color="primary.main" sx={{ fontWeight: "bold" }} variant="h5">
-												{item.lostItemName}
-											</Typography>
-											<Typography variant="subtitle1" fontWeight={600} mt={2}>
-												{item.description}
-											</Typography>
-											<Typography variant="subtitle1" fontWeight={600} mt={2}>
-												{item.location} - {dateFormatter(item.lostDate)}{" "}
-												{timeFormatter(item.lostDate)}
-											</Typography>
+				<>
+					<Box>
+						<Grid container spacing={3}>
+							{lostItems?.map((item: any) => (
+								<Grid key={item.id} lg={4} sm={6} xs={12}>
+									<Card
+										sx={{
+											borderRadius: "12px",
+											textAlign: "center",
+										}}>
+										<CardContent sx={{ p: 3 }}>
+											<Stack spacing={1}>
+												<Typography color="primary.main" sx={{ fontWeight: "bold" }} variant="h5">
+													{item.lostItemName}
+												</Typography>
+												<Typography variant="subtitle1" fontWeight={600} mt={2}>
+													{item.description}
+												</Typography>
+												<Typography variant="subtitle1" fontWeight={600} mt={2}>
+													{item.location} - {dateFormatter(item.lostDate)}{" "}
+													{timeFormatter(item.lostDate)}
+												</Typography>
 
-											<Link href={`/lost-items/${item.id}`}>
-												<Button
-													sx={{
-														fontWeight: "bold",
-														mt: "20px",
-														backgroundColor: "text.secondary",
-														"&:hover": {
+												<Link href={`/lost-items/${item.id}`}>
+													<Button
+														sx={{
+															fontWeight: "bold",
+															mt: "20px",
 															backgroundColor: "text.secondary",
-														},
-													}}>
-													View Details
-												</Button>
-											</Link>
-										</Stack>
-									</CardContent>
-								</Card>
-							</Grid>
-						))}
-					</Grid>
-				</Box>
+															"&:hover": {
+																backgroundColor: "text.secondary",
+															},
+														}}>
+														View Details
+													</Button>
+												</Link>
+											</Stack>
+										</CardContent>
+									</Card>
+								</Grid>
+							))}
+						</Grid>
+					</Box>
+					<Box
+						sx={{
+							mt: 5,
+							display: "flex",
+							justifyContent: "center",
+						}}>
+						<Pagination
+							color="primary"
+							count={Math.ceil((meta?.total as number) / limit)}
+							page={page}
+							onChange={handleChange}
+						/>
+					</Box>
+				</>
 			)}
 		</Container>
 	);
