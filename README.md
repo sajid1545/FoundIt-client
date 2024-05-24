@@ -42,8 +42,6 @@ Our lost and found system is designed to be a centralized platform where users c
 - [Zod](https://zod.dev/) - TypeScript validation
 - [Vercel](https://vercel.com/) - (Vercel) Serverless platform for hosting applications
 
-# [Deployed Client Link](https://assignment-9-client.vercel.app/)
-
 ## Getting Started
 
 First, run the development server:
@@ -78,3 +76,5 @@ npm run dev
 
 <br>
 <br>
+
+# [Deployed Client Link](https://assignment-9-client.vercel.app/)
