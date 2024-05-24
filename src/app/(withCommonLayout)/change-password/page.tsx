@@ -32,7 +32,7 @@ const ChangePassword = () => {
 	const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 	const [changePassword, { isLoading }] = useChangePasswordMutation();
 
-	const handleLogin = async (values: FieldValues) => {
+	const handleChangePassword = async (values: FieldValues) => {
 		const { confirmPassword, ...rest } = values;
 
 		if (rest.newPassword !== confirmPassword) {
@@ -45,6 +45,8 @@ const ChangePassword = () => {
 
 				if (res?.status === 200) {
 					logoutUser(router);
+
+					router.push("/login");
 					toast.success("Password changed successfully");
 				} else {
 					throw new Error("Incorrect  Password");
@@ -104,7 +106,7 @@ const ChangePassword = () => {
 
 					<Box sx={{ px: 4, py: 2 }}>
 						<FoundItForm
-							onSubmit={handleLogin}
+							onSubmit={handleChangePassword}
 							resolver={zodResolver(validationSchema)}
 							defaultValues={defaultValues}>
 							<Grid container spacing={2} my={1}>

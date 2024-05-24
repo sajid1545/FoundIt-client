@@ -36,7 +36,7 @@ export const lostItemsApi = baseApi.injectEndpoints({
 				method: "GET",
 				url: "/lost-items/my-items",
 			}),
-			providesTags: [tagTypes.lostItems],
+			providesTags: [tagTypes.lostItems, tagTypes.user],
 		}),
 
 		getSingleLostItem: build.query({

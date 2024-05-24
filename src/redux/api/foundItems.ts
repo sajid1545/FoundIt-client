@@ -35,7 +35,7 @@ export const foundItemsApi = baseApi.injectEndpoints({
 				method: "GET",
 				url: "/found-items/my-items",
 			}),
-			providesTags: [tagTypes.foundItems],
+			providesTags: [tagTypes.foundItems, tagTypes.user],
 		}),
 
 		getSingleFoundItem: build.query({

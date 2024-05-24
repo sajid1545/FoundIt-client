@@ -20,7 +20,7 @@ export const claimItemsApi = baseApi.injectEndpoints({
 				method: "GET",
 				url: "/claims/my-claims",
 			}),
-			providesTags: [tagTypes.claimItems],
+			providesTags: [tagTypes.claimItems, tagTypes.user],
 		}),
 
 		updateFoundItemClaimStatus: build.mutation({
