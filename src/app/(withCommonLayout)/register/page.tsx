@@ -50,6 +50,9 @@ const RegisterPage = () => {
 					toast.success("User created successfully");
 					setLoading(false);
 					router.push("/login");
+				} else {
+					setLoading(false);
+					toast.error("Something went wrong");
 				}
 			} catch (error) {
 				console.log(error);

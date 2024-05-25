@@ -44,9 +44,13 @@ const SubmitClaimItemsPage = () => {
 			const res = await createClaim(values).unwrap();
 			if (res?.id) {
 				toast.success(" Item  claimed successfully");
+
+				router.push("/my-claim-requests");
 			}
 		} catch (error) {
 			console.log(error);
+
+			toast.error("Something went wrong");
 		}
 	};
 

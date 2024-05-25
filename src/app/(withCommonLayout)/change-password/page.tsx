@@ -50,6 +50,8 @@ const ChangePassword = () => {
 					toast.success("Password changed successfully");
 				} else {
 					throw new Error("Incorrect  Password");
+
+					toast.error("Something went wrong");
 				}
 			} catch (error) {
 				console.log(error);

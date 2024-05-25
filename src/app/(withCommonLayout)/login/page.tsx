@@ -36,7 +36,7 @@ const LoginPage = () => {
 
 	const [loading, setLoading] = useState<boolean>(false);
 
-	const [error, setError] = useState<string>("");
+	// const [error, setError] = useState<string>("");
 
 	const handleLogin = async (values: FieldValues) => {
 		const { confirmPassword, ...rest } = values;
@@ -56,7 +56,7 @@ const LoginPage = () => {
 					toast.success("Logged in successfully");
 					setLoading(false);
 				} else {
-					setError("Invalid credentials");
+					// setError("Invalid credentials");
 					toast.error("Invalid credentials");
 					setLoading(false);
 				}
