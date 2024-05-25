@@ -31,8 +31,8 @@ const AuthButton = () => {
 					component={Link}
 					href="/login"
 					sx={{
-						my: 2,
-						mx: 4,
+						my: { xs: 2, md: 0 },
+						mx: { xs: 4 },
 						color: "white",
 						backgroundColor: "primary.main",
 						overflow: "hidden",

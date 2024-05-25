@@ -173,7 +173,7 @@ function NavBar() {
 							</Menu>
 						</Box>
 
-						<Box sx={{ flexGrow: 0 }}>
+						<Box sx={{ width: "70px", mr: 10 }}>
 							<AuthButton />
 						</Box>
 					</Toolbar>

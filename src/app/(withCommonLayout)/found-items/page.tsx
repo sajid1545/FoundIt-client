@@ -82,12 +82,12 @@ const FoundItemsPage = () => {
 
 					<CustomBorderTextField
 						onChange={(e) => setSearchTerm(e.target.value)}
-						placeholder="Search Lost Items"
+						placeholder="Search Found Items"
 						size="small"
 						value={searchTerm}
 						fullWidth
 						variant="outlined"
-						label="Search Lost Items"
+						label="Search Found Items"
 					/>
 				</Stack>
 			</Stack>
