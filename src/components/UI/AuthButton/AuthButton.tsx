@@ -1,16 +1,23 @@
+"use client";
 import { logoutUser } from "@/services/actions/logoutUser";
 import { getUserInfo } from "@/utils/localStorage";
 import { Button } from "@mui/material";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const AuthButton = () => {
+	const pathname = usePathname();
+
 	const router = useRouter();
 
 	const userInfo = getUserInfo();
 
 	const handleLogout = () => {
 		logoutUser(router);
+		if (pathname !== "/about" && pathname !== "/found-items") {
+			router.push("/login");
+			router.refresh();
+		}
 	};
 
 	return (

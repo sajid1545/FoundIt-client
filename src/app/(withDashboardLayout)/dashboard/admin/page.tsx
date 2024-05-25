@@ -17,7 +17,6 @@ import { DashboardCard } from "./components/DashboardCard";
 
 const AdminDashboard = () => {
 	const { data, isLoading } = useGetAllMetaDataQuery({});
-	console.log("🚀 ~ AdminDashboard ~ data:", data);
 
 	return (
 		<Container sx={{ mt: 4 }}>

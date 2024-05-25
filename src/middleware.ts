@@ -12,12 +12,12 @@ const protectedRoutes = [
 	"/submit-lost-items",
 	"/submit-claim-items",
 	"/my-profile",
-	"/my-lost-items",
-	"/my-lost-items/edit",
 	"/my-claim-requests",
+	"/my-lost-items",
+	"/my-lost-items/edit/:id*",
 	"/my-found-items",
-	"/my-found-items/edit",
-	"/my-found-items/edit-item",
+	"/my-found-items/edit/:id*",
+	"/my-found-items/edit-item/:id*",
 ];
 const roleBasedPrivateRoutes = {
 	ADMIN: [/^\/dashboard\/admin/],
@@ -25,6 +25,9 @@ const roleBasedPrivateRoutes = {
 
 export function middleware(request: NextRequest) {
 	const { pathname } = request.nextUrl;
+
+	// console.log("🚀 ~ middleware ~ pathname: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀", pathname);
+	// console.log("⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️", protectedRoutes.includes(pathname));
 
 	const accessToken = cookies().get(authKey)?.value;
 
