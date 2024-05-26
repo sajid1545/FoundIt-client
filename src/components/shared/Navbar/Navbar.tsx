@@ -15,8 +15,14 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 function NavBar() {
-	const AuthButton = dynamic(() => import("@/components/UI/AuthButton/AuthButton"), { ssr: false });
-	const AuthLinks = dynamic(() => import("@/components/UI/AuthLinks/AuthLinks"), { ssr: false });
+	const AuthButton = dynamic(() => import("@/components/UI/AuthButton/AuthButton"), {
+		ssr: false,
+		loading: () => <p style={{ color: "#2AB29F" }}>Loading...</p>,
+	});
+	const AuthLinks = dynamic(() => import("@/components/UI/AuthLinks/AuthLinks"), {
+		ssr: false,
+		loading: () => <p style={{ color: "#2AB29F" }}>Loading...</p>,
+	});
 	const AuthMenuItems = dynamic(() => import("@/components/UI/AuthMenuItems/AuthMenuItems"), {
 		ssr: false,
 	});

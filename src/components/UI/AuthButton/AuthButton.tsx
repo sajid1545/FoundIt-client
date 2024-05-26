@@ -14,7 +14,12 @@ const AuthButton = () => {
 
 	const handleLogout = () => {
 		logoutUser(router);
-		if (pathname !== "/about" && pathname !== "/found-items") {
+		if (
+			pathname !== "/about" &&
+			pathname !== "/found-items" &&
+			pathname !== "/" &&
+			pathname !== "/lost-items"
+		) {
 			router.push("/login");
 			router.refresh();
 		}
