@@ -11,6 +11,7 @@ Our lost and found system is designed to be a centralized platform where users c
 - If login is successful, users can see their profile, lost items, claim requests, and found items.
 - After login "My Profile" page link will be displayed in Navbar.
 - After login if the user role is "ADMIN", "Dashboard" link will be displayed in Navbar which only admin can access.
+- Users with `INACTIVE` status can't login into the application
 - In Lost and Found items page user can see all the lost and found items with pagination.
 - User can search using description key words, location, item name and filter using category name.
 - In order to claim an found item user must be logged in
