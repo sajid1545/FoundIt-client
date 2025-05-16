@@ -1,147 +1,200 @@
 "use client";
 
 import { useGetSingleFoundItemQuery } from "@/redux/api/foundItems";
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import { Cancel, CheckCircle, Pending } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  Card,
+  Chip,
+  Container,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
 import UpdateStatusModal from "../../components/UpdateStatusModal";
 
 type TProps = {
-	params: {
-		claimId: string;
-	};
+  params: {
+    claimId: string;
+  };
 };
 
+type ClaimStatus = "APPROVED" | "REJECTED" | "PENDING";
+
+const statusIcons: Record<ClaimStatus, JSX.Element> = {
+  APPROVED: <CheckCircle color="success" sx={{ fontSize: 20 }} />,
+  REJECTED: <Cancel color="error" sx={{ fontSize: 20 }} />,
+  PENDING: <Pending color="warning" sx={{ fontSize: 20 }} />,
+};
 const FoundItemsClaim = ({ params }: TProps) => {
-	const id = params.claimId;
+  const id = params.claimId;
+  const { data, isLoading } = useGetSingleFoundItemQuery(id);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedClaimId, setSelectedClaimId] = useState<string>("");
 
-	const { data, isLoading } = useGetSingleFoundItemQuery(id);
+  const handleOpenModal = (id: string) => {
+    setSelectedClaimId(id);
+    setIsModalOpen(true);
+  };
 
-	// For opening the update status modal
-	const [isModalOpen2, setIsModalOpen2] = useState<boolean>(false);
-	const [id2, setId2] = useState<string>("");
+  const claims = data?.claim;
 
-	const handleOpenModal2 = (id: string) => {
-		setId2(id);
-		setIsModalOpen2(true);
-	};
+  return (
+    <>
+      <UpdateStatusModal
+        open={isModalOpen}
+        setOpen={setIsModalOpen}
+        id={selectedClaimId}
+      />
 
-	const claims = data?.claim;
+      {isLoading ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "80vh",
+          }}
+        >
+          <Typography variant="h6" color="text.secondary">
+            Loading claims...
+          </Typography>
+        </Box>
+      ) : (
+        <Container maxWidth="lg" sx={{ py: 15 }}>
+          {/* Header Section */}
+          <Box textAlign="center" mb={6}>
+            <Typography
+              variant="h3"
+              sx={{
+                fontWeight: 700,
+                color: "#2AB29F",
+                mb: 2,
+                textTransform: "uppercase",
+                letterSpacing: 1,
+              }}
+            >
+              {data?.foundItemName}
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              color="text.secondary"
+              sx={{ maxWidth: 600, mx: "auto" }}
+            >
+              Review and manage all claims submitted for this found item
+            </Typography>
+          </Box>
 
-	return (
-		<>
-			<UpdateStatusModal open={isModalOpen2} setOpen={setIsModalOpen2} id={id2} />
-			{isLoading ? (
-				<Typography
-					align="center"
-					sx={{
-						m: 3,
-						display: "flex",
-						justifyContent: "center",
-						alignItems: "center",
-						height: "100vh",
-					}}
-					variant="h6">
-					Loading...
-				</Typography>
-			) : (
-				<Container sx={{ my: 15 }} maxWidth="xl">
-					<Typography
-						align="center"
-						variant="h4"
-						sx={{ color: "text.secondary", m: 3, fontWeight: "bold" }}>
-						{data?.foundItemName} Claims
-					</Typography>
+          {/* Claims Grid */}
+          <Stack spacing={4}>
+            {claims?.map((item: any) => (
+              <Card
+                key={item?.id}
+                sx={{
+                  p: 4,
+                  borderRadius: 3,
+                  boxShadow: "0 8px 24px rgba(42, 178, 159, 0.1)",
+                  borderLeft: "4px solid #2AB29F",
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    transform: "translateY(-3px)",
+                    boxShadow: "0 12px 28px rgba(42, 178, 159, 0.15)",
+                  },
+                }}
+              >
+                <Stack
+                  direction={{ xs: "column", md: "row" }}
+                  spacing={3}
+                  alignItems={{ md: "center" }}
+                >
+                  {/* User Avatar & Basic Info */}
+                  <Box sx={{ flex: 1 }}>
+                    <Typography variant="h6" fontWeight={600} gutterBottom>
+                      {item?.user?.name}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" mb={2}>
+                      Submitted on{" "}
+                      {new Date(item?.createdAt).toLocaleDateString()}
+                    </Typography>
 
-					<Stack
-						display={"flex"}
-						direction={{ xs: "column", md: "row" }}
-						gap={2}
-						flexWrap={"wrap"}
-						justifyContent={"center"}>
-						{claims?.map((item: any) => {
-							return (
-								<Box
-									key={item?.id}
-									sx={{
-										display: "flex",
-										flexDirection: { xs: "column" },
-										flexWrap: "wrap",
-										justifyContent: "center",
-										alignItems: "center",
-										gap: 1,
-										backgroundColor: "#C8EDFD)",
-										border: "1px solid #C8EDFD",
-										borderRadius: "10px",
-										textAlign: "center",
-										padding: "40px 10px",
-									}}>
-									<Typography sx={{ fontWeight: "bold", fontSize: "18px", my: 3 }}>
-										Claimed By {item?.user?.name}{" "}
-									</Typography>
-									<Box
-										sx={{
-											p: 2,
-											px: 2,
-											border: "1px solid #C8EDFD",
-											background: "#f4f7fe",
-											width: "300px",
-											textAlign: "center",
-										}}>
-										<Typography color={"text.secondary"} variant="caption">
-											Name
-										</Typography>
-										<Typography>{item?.user?.name}</Typography>
-									</Box>
-									<Box
-										sx={{
-											p: 2,
-											px: 2,
-											border: "1px solid #C8EDFD",
-											background: "#f4f7fe",
-											width: "300px",
-											textAlign: "center",
-										}}>
-										<Typography color={"text.secondary"} variant="caption">
-											Status
-										</Typography>
-										<Typography>
-											{item?.status === "REJECTED" ? (
-												<Typography fontWeight={600} color="red">
-													{item?.status}
-												</Typography>
-											) : item?.status === "APPROVED" ? (
-												<Typography fontWeight={600} color="green">
-													{item?.status}
-												</Typography>
-											) : (
-												<Typography>{item?.status}</Typography>
-											)}
-										</Typography>
-									</Box>
-									<Box
-										sx={{
-											p: 2,
-											px: 2,
-											border: "1px solid #C8EDFD",
-											background: "#f4f7fe",
-											width: "300px",
-											textAlign: "center",
-										}}>
-										<Typography color={"text.secondary"} variant="caption">
-											Update Status
-										</Typography>
-										<Typography>
-											<Button onClick={() => handleOpenModal2(item?.id)}>Update Status</Button>
-										</Typography>
-									</Box>
-								</Box>
-							);
-						})}
-					</Stack>
-				</Container>
-			)}
-		</>
-	);
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                      <Typography variant="body2">Status:</Typography>
+                      <Chip
+                        size="small"
+                        label={item?.status}
+                        icon={
+                          statusIcons[item?.status as ClaimStatus] ||
+                          statusIcons.PENDING
+                        }
+                        sx={{
+                          fontWeight: 600,
+                          backgroundColor:
+                            item?.status === "APPROVED"
+                              ? "rgba(46, 125, 50, 0.1)"
+                              : item?.status === "REJECTED"
+                              ? "rgba(211, 47, 47, 0.1)"
+                              : "rgba(255, 152, 0, 0.1)",
+                          color:
+                            item?.status === "APPROVED"
+                              ? "success.dark"
+                              : item?.status === "REJECTED"
+                              ? "error.dark"
+                              : "warning.dark",
+                        }}
+                      />
+                    </Box>
+                  </Box>
+
+                  {/* Action Buttons */}
+                  <Box>
+                    <Button
+                      variant="contained"
+                      onClick={() => handleOpenModal(item?.id)}
+                      sx={{
+                        backgroundColor: "#2AB29F",
+                        "&:hover": {
+                          backgroundColor: "#1e8c7a",
+                        },
+                        px: 4,
+                        py: 1.5,
+                        borderRadius: 2,
+                        fontWeight: 600,
+                        textTransform: "none",
+                        boxShadow: "none",
+                      }}
+                    >
+                      Update Status
+                    </Button>
+                  </Box>
+                </Stack>
+
+                {/* Additional Details (shown on click if needed) */}
+                <Box mt={3} sx={{ display: "none" /* Can be toggled */ }}>
+                  <Typography variant="body2" color="text.secondary">
+                    <strong>Contact:</strong>{" "}
+                    {item?.user?.email || "Not provided"}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    <strong>Description:</strong>{" "}
+                    {item?.description || "No additional details"}
+                  </Typography>
+                </Box>
+              </Card>
+            ))}
+
+            {claims?.length === 0 && (
+              <Box textAlign="center" py={10}>
+                <Typography variant="h6" color="text.secondary">
+                  No claims have been submitted for this item yet
+                </Typography>
+              </Box>
+            )}
+          </Stack>
+        </Container>
+      )}
+    </>
+  );
 };
 
 export default FoundItemsClaim;
