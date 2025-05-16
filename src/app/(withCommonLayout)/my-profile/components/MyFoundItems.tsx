@@ -1,241 +1,341 @@
 import { useGetMyFoundItemsQuery } from "@/redux/api/foundItems";
 import { dateFormatter } from "@/utils/dateFormatter";
-import { Box, Button, Container, Stack, Typography, styled } from "@mui/material";
-import Select from "@mui/material/Select";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Chip,
+  Container,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
 import ItemDeleteConfirmation from "../../my-found-items/components/ItemDeleteConfirmation";
 
-export const CustomBorderSelectField = styled(Select)`
-	& label.Mui-focused {
-		color: #2ab29f;
-	}
-	& .MuiOutlinedInput-root {
-		&.Mui-focused fieldset {
-			border-color: #2ab29f;
-		}
-	}
-`;
-
 const MyFoundItems = () => {
-	const { data, isLoading } = useGetMyFoundItemsQuery(
-		{},
-		{
-			refetchOnMountOrArgChange: true,
-		}
-	);
+  const theme = useTheme();
+  const { data, isLoading } = useGetMyFoundItemsQuery(
+    {},
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  );
 
-	const [openAlert, setOpenAlert] = useState(false);
-	const [idToDelete, setIdToDelete] = useState<string>("");
+  const [openAlert, setOpenAlert] = useState(false);
+  const [idToDelete, setIdToDelete] = useState<string>("");
 
-	const handleOpenDeleteConfirmation = (id: string) => {
-		setOpenAlert(true);
-		setIdToDelete(id);
-	};
+  const handleOpenDeleteConfirmation = (id: string) => {
+    setOpenAlert(true);
+    setIdToDelete(id);
+  };
 
-	return (
-		<Container sx={{ my: 10 }} maxWidth="xl">
-			<ItemDeleteConfirmation open={openAlert} setOpen={setOpenAlert} id={idToDelete} />
+  // Color theme variables
+  const primaryColor = "#2AB29F";
+  const primaryLight = "rgba(42, 178, 159, 0.1)";
+  const primaryLighter = "rgba(42, 178, 159, 0.05)";
+  const primaryDark = "#1E9C8B";
+  const secondaryColor = "#C8EDFD";
 
-			<Typography
-				align="center"
-				variant="h4"
-				sx={{ color: "text.secondary", m: 3, fontWeight: "bold" }}>
-				My Found Items
-			</Typography>
+  return (
+    <Container sx={{ my: 8 }} maxWidth="xl">
+      <ItemDeleteConfirmation
+        open={openAlert}
+        setOpen={setOpenAlert}
+        id={idToDelete}
+      />
 
-			{isLoading ? (
-				<Typography align="center" sx={{ m: 3 }} variant="h6">
-					Loading...
-				</Typography>
-			) : (
-				<>
-					{data?.length === 0 && !isLoading && (
-						<Typography sx={{ textAlign: "center" }} variant="h5">
-							No Items Found
-						</Typography>
-					)}
-					<Stack direction={{ xs: "column", md: "row" }} gap={4} mt={5}>
-						{data?.slice(0, 3)?.map((item: any) => (
-							<Box
-								key={item.id}
-								sx={{
-									display: "flex",
-									flex: 1,
-									flexDirection: "column",
-									justifyContent: { xs: "center", md: "flex-start" },
-									alignItems: { xs: "center", md: "center" },
-									backgroundColor: "#C8EDFD)",
-									border: "1px solid #C8EDFD",
-									borderRadius: "10px",
-									textAlign: "center",
-									padding: "40px 10px",
-									"&:hover": {
-										border: "1px solid #2AB29F",
-										borderRadius: "10px",
+      <Typography
+        variant="h4"
+        sx={{
+          color: "text.primary",
+          mb: 6,
+          fontWeight: 700,
+          textAlign: "center",
+          position: "relative",
+          "&::after": {
+            content: '""',
+            display: "block",
+            width: "100px",
+            height: "4px",
+            background: `linear-gradient(90deg, ${primaryColor}, ${secondaryColor})`,
+            margin: "16px auto 0",
+            borderRadius: "4px",
+          },
+        }}
+      >
+        My Found Items
+      </Typography>
 
-										transition: "all 0.5s",
-										boxShadow: "0px 0px 10px 0px #D3D3D3",
-									},
-								}}>
-								<Typography sx={{ fontWeight: "bold", fontSize: "18px", textAlign: "center" }}>
-									{item?.foundItemName}
-								</Typography>
+      {isLoading ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "200px",
+          }}
+        >
+          <Typography variant="h6" color="text.secondary">
+            Loading your found items...
+          </Typography>
+        </Box>
+      ) : (
+        <>
+          {data?.length === 0 && !isLoading && (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "200px",
+                backgroundColor: primaryLighter,
+                borderRadius: 2,
+                border: `1px dashed ${primaryColor}`,
+              }}
+            >
+              <Typography variant="h5" color="text.secondary">
+                No Found Items Available
+              </Typography>
+            </Box>
+          )}
 
-								<Stack
-									direction={{ xs: "column", md: "row" }}
-									gap={2}
-									flexWrap={"wrap"}
-									justifyContent={"center"}>
-									<Box
-										sx={{
-											p: 2,
-											px: 2,
-											border: "1px solid #C8EDFD",
-											background: "#f4f7fe",
-											width: "300px",
-											textAlign: "center",
-										}}>
-										<Typography color={"text.secondary"} variant="caption">
-											Item Description
-										</Typography>
-										<Typography>{item?.description}</Typography>
-									</Box>
-									<Box
-										sx={{
-											p: 2,
-											px: 2,
-											border: "1px solid #C8EDFD",
-											background: "#f4f7fe",
-											width: "300px",
-											textAlign: "center",
-										}}>
-										<Typography color={"text.secondary"} variant="caption">
-											Date & Location
-										</Typography>
-										<Typography>
-											{item?.location} -{dateFormatter(item?.foundDate)}{" "}
-										</Typography>
-									</Box>
-									<Box
-										sx={{
-											p: 2,
-											px: 2,
-											border: "1px solid #C8EDFD",
-											background: "#f4f7fe",
-											width: "300px",
-											textAlign: "center",
-										}}>
-										<Typography color={"text.secondary"} variant="caption">
-											Action
-										</Typography>
+          <Stack
+            direction={{ xs: "column", md: "row" }}
+            gap={4}
+            flexWrap="wrap"
+            justifyContent="center"
+          >
+            {data?.slice(0, 3)?.map((item: any, index: number) => (
+              <Box
+                key={item.id}
+                component={motion.div}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+                whileHover={{ y: -5 }}
+                sx={{ minWidth: { xs: "100%", md: "360px" }, flex: 1 }}
+              >
+                <Card
+                  sx={{
+                    height: "100%",
+                    borderRadius: 3,
+                    background: "#ffffff",
+                    boxShadow: `0 6px 20px ${primaryLight}`,
+                    border: `1px solid ${primaryLight}`,
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      boxShadow: `0 12px 24px ${primaryLight}`,
+                    },
+                  }}
+                >
+                  <CardContent sx={{ p: 3 }}>
+                    <Stack spacing={2}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          mb: 1,
+                        }}
+                      >
+                        <Typography
+                          variant="h6"
+                          sx={{
+                            fontWeight: 700,
+                            color: primaryDark,
+                          }}
+                        >
+                          {item?.foundItemName}
+                        </Typography>
+                        <Chip
+                          label={
+                            item?.claim?.length > 0
+                              ? `${item.claim.length} Claims`
+                              : "No Claims"
+                          }
+                          size="small"
+                          sx={{
+                            backgroundColor:
+                              item?.claim?.length > 0
+                                ? "rgba(76, 175, 80, 0.1)"
+                                : "rgba(158, 158, 158, 0.1)",
+                            color:
+                              item?.claim?.length > 0 ? "#4CAF50" : "#9E9E9E",
+                            fontWeight: 600,
+                          }}
+                        />
+                      </Box>
 
-										<Box
-											sx={{
-												display: "flex",
-												alignItems: "center",
-												justifyContent: "center",
-												gap: 3,
-												flexWrap: "wrap",
-											}}>
-											<Link href={`/my-found-items/edit-item/${item?.id}`}>
-												<Button
-													size="small"
-													sx={{
-														mt: 0.5,
-														fontSize: "12px",
-														backgroundColor: "primary.main",
-														color: "white",
-														px: 2.5,
-														py: 0.8,
-														borderRadius: "5px",
-													}}>
-													Edit
-												</Button>
-											</Link>
-											<Button
-												onClick={() => handleOpenDeleteConfirmation(item?.id)}
-												color="error"
-												size="small"
-												sx={{
-													mt: 0.5,
-													fontSize: "12px",
-													backgroundColor: "red",
-													color: "white",
-													px: 2.5,
-													py: 0.8,
-													borderRadius: "5px",
-												}}>
-												Delete
-											</Button>
-										</Box>
-									</Box>
-								</Stack>
+                      <Box
+                        sx={{
+                          p: 2,
+                          backgroundColor: primaryLighter,
+                          borderRadius: 2,
+                          borderLeft: `3px solid ${primaryColor}`,
+                        }}
+                      >
+                        <Typography
+                          variant="caption"
+                          sx={{
+                            display: "block",
+                            mb: 0.5,
+                            fontWeight: 600,
+                            color: primaryDark,
+                          }}
+                        >
+                          Description
+                        </Typography>
+                        <Typography variant="body2" sx={{ lineHeight: 1.6 }}>
+                          {item?.description || "No description provided"}
+                        </Typography>
+                      </Box>
 
-								<Stack
-									direction={{ xs: "column", md: "row" }}
-									gap={2}
-									flexWrap={"wrap"}
-									justifyContent={"center"}>
-									{item?.claim?.length === 0 && (
-										<Typography sx={{ fontWeight: "bold", fontSize: "20px", mt: 5 }}>
-											No Claim For{" "}
-											<Box component={"span"} sx={{ color: "#2AB29F" }}>
-												{item?.foundItemName}
-											</Box>
-										</Typography>
-									)}
+                      <Box
+                        sx={{
+                          p: 2,
+                          backgroundColor: primaryLighter,
+                          borderRadius: 2,
+                          borderLeft: `3px solid ${primaryColor}`,
+                        }}
+                      >
+                        <Typography
+                          variant="caption"
+                          sx={{
+                            display: "block",
+                            mb: 0.5,
+                            fontWeight: 600,
+                            color: primaryDark,
+                          }}
+                        >
+                          Location & Date
+                        </Typography>
+                        <Typography variant="body2" sx={{ lineHeight: 1.6 }}>
+                          {item?.location || "Unknown location"} •{" "}
+                          {dateFormatter(item?.foundDate)}
+                        </Typography>
+                      </Box>
 
-									{item?.claim.length > 0 && (
-										<Link href={`/my-found-items/edit/${item?.id}`}>
-											<Box
-												sx={{
-													display: "block",
-													mx: "auto",
-													mt: 3,
-													fontWeight: "bold",
-													fontSize: "18px",
-													backgroundColor: "#2AB29F",
-													color: "white",
-													width: "100%",
-													padding: "8px 10px",
-													borderRadius: "3px",
-													cursor: "pointer",
-												}}>
-												View all {item?.foundItemName} Claims
-											</Box>
-										</Link>
-									)}
-								</Stack>
-							</Box>
-						))}
-					</Stack>
-					<Link href="/my-found-items">
-						<Button
-							variant="outlined"
-							sx={{
-								mt: "35px",
-								border: "1px solid #2AB29F",
-								color: "#203145",
-								display: "block",
-								textAlign: "center",
-								fontWeight: "bold",
-								mx: "auto",
+                      <Stack
+                        direction="row"
+                        spacing={2}
+                        justifyContent="space-between"
+                        sx={{ mt: 2 }}
+                      >
+                        <Stack direction="row" spacing={1}>
+                          <Link
+                            href={`/my-found-items/edit-item/${item?.id}`}
+                            passHref
+                          >
+                            <Button
+                              variant="outlined"
+                              size="small"
+                              sx={{
+                                borderRadius: 2,
+                                px: 2,
+                                fontWeight: 600,
+                                borderColor: primaryLight,
+                                color: primaryDark,
+                                "&:hover": {
+                                  borderColor: primaryColor,
+                                  backgroundColor: primaryLighter,
+                                },
+                              }}
+                            >
+                              Edit
+                            </Button>
+                          </Link>
+                          <Button
+                            onClick={() =>
+                              handleOpenDeleteConfirmation(item?.id)
+                            }
+                            variant="outlined"
+                            color="error"
+                            size="small"
+                            sx={{
+                              borderRadius: 2,
+                              px: 2,
+                              fontWeight: 600,
+                              "&:hover": {
+                                backgroundColor: "rgba(244, 67, 54, 0.04)",
+                              },
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        </Stack>
+                      </Stack>
 
-								"&:hover": {
-									backgroundColor: "#2AB29F",
-									color: "white",
-									transition: "all 0.5s",
-									border: "1px solid #2AB29F",
-								},
-							}}>
-							View All My Found Items
-						</Button>
-					</Link>
-				</>
-			)}
-		</Container>
-	);
+                      {item?.claim?.length > 0 && (
+                        <Link
+                          href={`/my-found-items/edit/${item?.id}`}
+                          passHref
+                        >
+                          <Button
+                            variant="contained"
+                            sx={{
+                              mt: 2,
+                              width: "100%",
+                              borderRadius: 2,
+                              py: 1,
+                              fontWeight: 600,
+                              backgroundColor: primaryColor,
+                              "&:hover": {
+                                backgroundColor: primaryDark,
+                              },
+                            }}
+                          >
+                            View {item.claim.length} Claim
+                            {item.claim.length !== 1 ? "s" : ""}
+                          </Button>
+                        </Link>
+                      )}
+                    </Stack>
+                  </CardContent>
+                </Card>
+              </Box>
+            ))}
+          </Stack>
+
+          {data?.length > 0 && (
+            <Box
+              component={motion.div}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              sx={{ textAlign: "center", mt: 6 }}
+            >
+              <Link href="/my-found-items" passHref>
+                <Button
+                  variant="outlined"
+                  sx={{
+                    px: 5,
+                    py: 1.5,
+                    borderRadius: 2,
+                    borderWidth: 2,
+                    borderColor: primaryColor,
+                    color: primaryDark,
+                    fontWeight: 600,
+                    fontSize: "1rem",
+                    "&:hover": {
+                      backgroundColor: primaryColor,
+                      color: "white",
+                      borderWidth: 2,
+                    },
+                  }}
+                >
+                  View All My Found Items
+                </Button>
+              </Link>
+            </Box>
+          )}
+        </>
+      )}
+    </Container>
+  );
 };
 
 export default MyFoundItems;
